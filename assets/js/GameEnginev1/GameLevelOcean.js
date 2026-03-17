@@ -45,22 +45,35 @@ class GameLevelOcean {
 
 
            SCALE_FACTOR: 5,
-           ANIMATION_RATE: 50,
-
-
+           ANIMATION_RATE: 100, // Increased animation rate to slow down movement
            INIT_POSITION: { x: width * 0.7, y: height * 0.6 },
 
 
            pixels: { height: 250, width: 167 },
 
 
-           orientation: { rows: 3, columns: 2 },
+           orientation: { rows: 3, columns: 2 }, // Updated to match the 6 ways in octopus.png
 
-
-           down: { row: 0, start: 0, columns: 2 },
-
+           up: { row: 2, start: 0, columns: 2 }, // Added upward movement
+           left: { row: 1, start: 0, columns: 2 }, // Reverted leftward movement to original
+           right: { row: 1, start: 0, columns: 2 }, // Rightward movement remains unchanged
+           down: { row: 0, start: 0, columns: 2 }, // Downward movement remains
+           idle: { row: 0, start: 0, columns: 1 }, // Added idle state
 
            hitbox: { widthPercentage: 0.4, heightPercentage: 0.4 }
+       };
+
+       const goldfishData = {
+           id: "Goldfish",
+           greeting: "I am a Goldfish!",
+           src: path + "/images/gamify/water/gold.png", // Corrected file name
+           SCALE_FACTOR: 3,
+           ANIMATION_RATE: 80,
+           pixels: { height: 150, width: 100 },
+           INIT_POSITION: { x: width * 0.5, y: height * 0.5 },
+           orientation: { rows: 2, columns: 2 },
+           down: { row: 0, start: 0, columns: 2 },
+           hitbox: { widthPercentage: 0.3, heightPercentage: 0.3 }
        };
 
        this.classes = [
@@ -68,6 +81,30 @@ class GameLevelOcean {
            { class: Npc, data: sharkData }, // Shark is now an NPC
            { class: Player, data: octopusData } // Octopus is now the Player
        ];
+
+       // Add collision logic for the Goldfish
+       this.handleGoldfishCollision = (octopus, goldfish) => {
+           if (
+               octopus.position.x < goldfish.position.x + goldfish.pixels.width &&
+               octopus.position.x + octopus.pixels.width > goldfish.position.x &&
+               octopus.position.y < goldfish.position.y + goldfish.pixels.height &&
+               octopus.position.y + octopus.pixels.height > goldfish.position.y
+           ) {
+               // Collision detected, randomize Goldfish position
+               goldfish.position.x = Math.random() * (width - goldfish.pixels.width);
+               goldfish.position.y = Math.random() * (height - goldfish.pixels.height);
+           }
+       };
+
+       // Ensure the Goldfish collision logic is checked in the update loop
+       this.update = () => {
+           const octopus = this.classes.find(obj => obj.data.id === "Octopus");
+           const goldfish = this.classes.find(obj => obj.data.id === "Goldfish");
+
+           if (octopus && goldfish) {
+               this.handleGoldfishCollision(octopus, goldfish);
+           }
+       };
    }
 }
 
