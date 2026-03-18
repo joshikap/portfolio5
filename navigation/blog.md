@@ -4,3 +4,53 @@ title: Blogs
 search_exclude: true
 permalink: /blogs/
 ---
+
+## GameLevelOcean.js Progress
+
+### Overview
+Completed development of an interactive ocean-themed game level featuring collision detection, sprite animation, and dynamic game object management.
+
+### Key Features Implemented
+
+#### 1. Game Objects
+- **Background**: Reef environment image (597×340 pixels)
+- **Player Character**: Octopus sprite with multi-directional animation
+  - Sprite dimensions: 250×167 pixels (3 rows × 2 columns)
+  - Scale factor: 5x
+  - Supported directions: up, down, left, right, idle
+  - Animation rate: 100ms per frame
+  - Custom hitbox: 40% width, 40% height
+  
+- **Enemy NPC**: Shark adversary
+  - Sprite dimensions: 225×225 pixels
+  - Scale factor: 5x
+  - Animation rate: 100ms
+  - Custom hitbox: 25% width, 55% height
+  
+- **Collectible Object**: Goldfish
+  - Sprite dimensions: 150×100 pixels
+  - Scale factor: 3x
+  - Animation rate: 80ms
+  - Custom hitbox: 30% width, 30% height
+
+#### 2. Collision System
+- Implemented AABB (axis-aligned bounding box) collision detection
+- Octopus-Goldfish collision triggers goldfish respawn
+- Goldfish repositions randomly within game bounds on collision detection
+- Hitbox dimensions customized per sprite for realistic collision behavior
+
+#### 3. Game Loop
+- Update method continuously monitors game state
+- Automated collision checking between player (octopus) and collectible (goldfish)
+- Physics-based positioning system with dynamic repositioning
+
+### Technical Architecture
+- Class-based structure with `GameLevelOcean` as main class
+- Imports: `GameEnvBackground`, `Player`, `NPC`, and `Shark` utilities
+- Constructor accepts `gameEnv` object containing game dimensions and asset paths
+- Modular game object configuration with sprite data objects
+- Export ready for integration with game engine
+
+### Result
+Fully functional ocean game level with interactive gameplay mechanics, supporting sprite animation, collision detection, and dynamic object management.
+s
