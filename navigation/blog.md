@@ -53,4 +53,55 @@ Completed development of an interactive ocean-themed game level featuring collis
 
 ### Result
 Fully functional ocean game level with interactive gameplay mechanics, supporting sprite animation, collision detection, and dynamic object management.
-s
+
+## GameLevelOcean2.js Progress
+
+### Overview
+Advanced second iteration of the ocean-themed game level featuring dynamic enemy movement, interactive NPCs, and an expanded game world with a space-like background.
+
+### Key Features Implemented
+
+#### 1. Game Objects
+- **Background**: Space environment image (857×1200 pixels)
+- **Player Character**: Octopus sprite with multi-directional animation
+  - Sprite dimensions: 167×250 pixels (3 rows × 2 columns)
+  - Scale factor: 5x
+  - Supported directions: up, down, left, right, idle
+  - Animation rate: 100ms per frame
+  - Custom hitbox: 40% width, 40% height
+  
+- **Enemy NPC**: Shark with autonomous movement
+  - Sprite dimensions: 225×225 pixels
+  - Scale factor: 5x
+  - Animation rate: 100ms
+  - Custom hitbox: 25% width, 55% height
+  - Speed: 5 pixels per update
+  - Random direction initialization
+  
+- **Interactive NPC**: Goldfish companion
+  - Sprite dimensions: 200×100 pixels
+  - Scale factor: 6x
+  - Animation rate: 50ms
+  - Custom hitbox: 25% width, 40% height
+  - Greeting message: "Be careful of the shark!"
+
+#### 2. Movement and Animation System
+- **Shark Autonomous Movement**:
+  - Updates position every 100ms
+  - Bounces off screen boundaries (direction reversal)
+  - Random direction changes every 2000ms
+  - Dynamic sprite flipping based on direction
+  
+- **Multi-directional Animation**: Octopus supports up, down, left, right, and idle states with corresponding sprite rows
+- **NPC Greeting System**: NPCs display contextual messages (Shark: "Enemy Shark", Goldfish: "Be careful of the shark!")
+
+#### 3. Game Architecture
+- Class-based structure with `GameLevelOcean2` as main class
+- Imports: `GameEnvBackground`, `Player`, `Npc`, and `Shark` utilities
+- Constructor accepts `gameEnv` object containing game dimensions and asset paths
+- Modular sprite data configuration objects
+- Interval-based update loops for autonomous enemy behavior
+- Prepared collision detection framework in update method
+
+### Result
+Enhanced ocean game level with dynamic enemy AI, multiple NPCs, autonomous movement mechanics, and interactive gameplay elements supporting multi-character interaction.
