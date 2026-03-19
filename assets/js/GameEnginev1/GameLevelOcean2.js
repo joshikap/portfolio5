@@ -14,11 +14,11 @@ class GameLevelOcean2 {
        // 🌊 Background
        const bgData = {
            id: "Water",
-           src: path + "/images/gamify/bg/reef.png",
+           src: path + "/images/gamify/water/deepseadungeon.png",
            pixels: { height: 597, width: 340 }
        };
 
-       // 🦈 Shark (NPC)
+       // 🦈 Shark
        const sprite_data_shark = {
            id: 'Shark',
            greeting: "Enemy Shark",
@@ -26,13 +26,75 @@ class GameLevelOcean2 {
            SCALE_FACTOR: 5,
            ANIMATION_RATE: 100,
            pixels: {height: 225, width: 225},
-           INIT_POSITION: { x: 100, y: 100},
+
+           INIT_POSITION: { 
+               x: Math.random() * width, 
+               y: Math.random() * height 
+           },
+
            orientation: {rows: 1, columns: 1 },
            down: {row: 0, start: 0, columns: 1 }, 
            hitbox: { widthPercentage: 0.25, heightPercentage: 0.55 },
+
+           speed: 5,
+           direction: {
+               x: Math.random() > 0.5 ? 1 : -1,
+               y: Math.random() > 0.5 ? 1 : -1
+           },
+
+           updatePosition: function () {
+               this.INIT_POSITION.x += this.direction.x * this.speed;
+               this.INIT_POSITION.y += this.direction.y * this.speed;
+
+               if (this.INIT_POSITION.x <= 0 || this.INIT_POSITION.x >= width) {
+                   this.direction.x *= -1;
+               }
+               if (this.INIT_POSITION.y <= 0 || this.INIT_POSITION.y >= height) {
+                   this.direction.y *= -1;
+               }
+
+               const spriteElement = document.getElementById(this.id);
+               if (spriteElement) {
+                   spriteElement.style.transform = this.direction.x === -1 ? "scaleX(-1)" : "scaleX(1)";
+                   spriteElement.style.left = this.INIT_POSITION.x + 'px';
+                   spriteElement.style.top = this.INIT_POSITION.y + 'px';
+               }
+           },
+
+           randomizeDirection: function () {
+               this.direction.x = Math.random() > 0.5 ? 1 : -1;
+               this.direction.y = Math.random() > 0.5 ? 1 : -1;
+           }
        };
 
-       // 🐙 Player (Octopus)
+       setInterval(() => {
+           sprite_data_shark.updatePosition();
+       }, 100);
+
+       setInterval(() => {
+           sprite_data_shark.randomizeDirection();
+       }, 2000);
+
+       // 🐠 Goldfish (NEW NPC)
+       const sprite_data_goldfish = {
+           id: "Goldfish",
+           greeting: "Be careful of the shark!",
+           src: path + "/images/gamify/water/gold.png",
+
+           SCALE_FACTOR: 6,
+           ANIMATION_RATE: 50,
+
+           INIT_POSITION: { x: width * 0.3, y: height * 0.5 },
+
+           pixels: { width: 200, height: 100 },
+
+           orientation: { rows: 1, columns: 2 },
+           down: { row: 0, start: 0, columns: 2 },
+
+           hitbox: { widthPercentage: 0.25, heightPercentage: 0.4 }
+       };
+
+       // 🐙 Player
        const sprite_data_octopus = {
            id: "Octopus",
            greeting: "Hi I am Octopus!",
@@ -54,35 +116,19 @@ class GameLevelOcean2 {
            hitbox: { widthPercentage: 0.4, heightPercentage: 0.4 }
        };
 
-       // 🐡 Puffer Fish Barrier
-       const sprite_data_puffer = {
-           id: 'PufferFish',
-           greeting: "Careful! I’m spiky!",
-           src: path + "/images/gamify/water/puffer.png",
-           SCALE_FACTOR: 4,
-           ANIMATION_RATE: 0,
-           pixels: { height: 128, width: 128 },
-           INIT_POSITION: { x: width * 0.5, y: height * 0.4 },
-           orientation: { rows: 1, columns: 1 },
-           down: { row: 0, start: 0, columns: 1 },
-           hitbox: { widthPercentage: 0.7, heightPercentage: 0.7 },
-           isBarrier: true
-       };
-
-       // 📦 Classes list (Desert-style)
+       // 📦 Classes
        this.classes = [
            { class: GameEnvBackground, data: bgData },
            { class: Player, data: sprite_data_octopus },
-           { class: Npc, data: sprite_data_shark },
-           { class: Npc, data: sprite_data_puffer }
+           { class: Shark, data: sprite_data_shark },
+           { class: Npc, data: sprite_data_goldfish }, // ✅ added here
        ];
 
-       // 🔁 Update loop
        this.update = () => {
            const octopus = this.classes.find(obj => obj.data.id === "Octopus");
 
            if (octopus) {
-               // collision logic can go here later
+               // future collision logic
            }
        };
    }
