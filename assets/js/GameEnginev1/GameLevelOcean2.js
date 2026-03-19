@@ -14,8 +14,8 @@ class GameLevelOcean2 {
        // 🌊 Background
        const bgData = {
            id: "Water",
-           src: path + "/images/gamify/water/deepseadungeon.png",
-           pixels: { height: 597, width: 340 }
+           src: path + "/images/gamify/water/space.png",
+           pixels: { height: 1200, width: 857 }
        };
 
        // 🦈 Shark
