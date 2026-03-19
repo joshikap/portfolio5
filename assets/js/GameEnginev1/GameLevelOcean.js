@@ -11,7 +11,6 @@ class GameLevelOcean {
        const width = gameEnv.innerWidth;
        const height = gameEnv.innerHeight;
 
-       // ✅ SCORE
        this.score = 0;
 
        const bgData = {
@@ -50,15 +49,14 @@ class GameLevelOcean {
            hitbox: { widthPercentage: 0.4, heightPercentage: 0.4 }
        };
 
-       // ✅ COIN (your collectible)
        const coinData = {
            id: "Coin",
-           greeting: "Gold Coin!",
-           src: path + "/images/gamify/water/gold.png",
-           SCALE_FACTOR: 2,
+           greeting: "Puffer Fish!",
+           src: path + "/images/gamify/water/puffer.png",
+           SCALE_FACTOR: 8,
            ANIMATION_RATE: 100,
            pixels: { height: 120, width: 120 },
-           INIT_POSITION: { x: 300, y: 200 },
+           INIT_POSITION: { x: width * 0.3, y: height * 0.3 },
            orientation: { rows: 1, columns: 1 },
            down: { row: 0, start: 0, columns: 1 },
            hitbox: { widthPercentage: 0.5, heightPercentage: 0.5 }
@@ -71,7 +69,6 @@ class GameLevelOcean {
            { class: Npc, data: coinData }
        ];
 
-       // ✅ COIN COLLISION ONLY
        this.handleCoinCollision = (octopus, coin) => {
            if (
                octopus.position.x < coin.position.x + coin.pixels.width &&
@@ -87,7 +84,6 @@ class GameLevelOcean {
            }
        };
 
-       // ✅ UPDATE LOOP
        this.update = () => {
            const objects = gameEnv.gameObjects || [];
 
