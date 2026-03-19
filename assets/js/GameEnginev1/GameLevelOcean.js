@@ -1,7 +1,6 @@
 import GameEnvBackground from './essentials/GameEnvBackground.js';
 import Player from './essentials/Player.js';
 import Npc from './essentials/Npc.js';
-import Shark from './Shark.js';
 
 class GameLevelOcean {
 
@@ -13,25 +12,14 @@ class GameLevelOcean {
 
        this.score = 0;
 
+       // Background
        const bgData = {
            id: "Water",
            src: path + "/images/gamify/bg/reef.png",
            pixels: { height: 597, width: 340 }
        };
 
-       const sharkData = {
-           id: 'Shark',
-           greeting: "Enemy Shark",
-           src: path + "/images/gamify/water/shark.png",
-           SCALE_FACTOR: 5,
-           ANIMATION_RATE: 100,
-           pixels: {height: 225, width: 225},
-           INIT_POSITION: { x: 100, y: 100},
-           orientation: {rows: 1, columns: 1 },
-           down: {row: 0, start: 0, columns: 1 }, 
-           hitbox: { widthPercentage: 0.25, heightPercentage: 0.55 },
-       };
-
+       // Octopus (player)
        const octopusData = {
            id: "Octopus",
            greeting: "Hi I am Octopus!",
@@ -49,38 +37,54 @@ class GameLevelOcean {
            hitbox: { widthPercentage: 0.4, heightPercentage: 0.4 }
        };
 
-       const coinData = {
-           id: "Coin",
-           greeting: "Puffer Fish!",
-           src: path + "/images/gamify/water/puffer.png",
-           SCALE_FACTOR: 8,
+       // ✅ Shark BACK
+       const sharkData = {
+           id: 'Shark',
+           greeting: "Enemy Shark",
+           src: path + "/images/gamify/water/shark.png",
+           SCALE_FACTOR: 5,
            ANIMATION_RATE: 100,
-           pixels: { height: 120, width: 120 },
-           INIT_POSITION: { x: width * 0.3, y: height * 0.3 },
+           pixels: { height: 225, width: 225 },
+           INIT_POSITION: { x: 100, y: 100 },
            orientation: { rows: 1, columns: 1 },
            down: { row: 0, start: 0, columns: 1 },
            hitbox: { widthPercentage: 0.5, heightPercentage: 0.5 }
        };
 
+       // ✅ Wizard (fixed)
+       const wizardData = {
+           id: "Wizard",
+           greeting: "Magic Wizard!",
+           src: path + "/images/gamify/water/wizard.png",
+           SCALE_FACTOR: 3,
+           ANIMATION_RATE: 100,
+           pixels: { height: 256, width: 256 },
+           INIT_POSITION: { x: width * 0.5, y: height * 0.5 },
+           orientation: { rows: 1, columns: 1 },
+           down: { row: 0, start: 0, columns: 1 },
+           hitbox: { widthPercentage: 0.8, heightPercentage: 0.8 }
+       };
+
+       // ✅ IMPORTANT: include BOTH shark and wizard
        this.classes = [
            { class: GameEnvBackground, data: bgData },
-           { class: Npc, data: sharkData },
            { class: Player, data: octopusData },
-           { class: Npc, data: coinData }
+           { class: Npc, data: sharkData },
+           { class: Npc, data: wizardData }
        ];
 
-       this.handleCoinCollision = (octopus, coin) => {
+       // ✅ Wizard collision
+       this.handleWizardCollision = (octopus, wizard) => {
            if (
-               octopus.position.x < coin.position.x + coin.pixels.width &&
-               octopus.position.x + octopus.pixels.width > coin.position.x &&
-               octopus.position.y < coin.position.y + coin.pixels.height &&
-               octopus.position.y + octopus.pixels.height > coin.position.y
+               octopus.position.x < wizard.position.x + wizard.pixels.width &&
+               octopus.position.x + octopus.pixels.width > wizard.position.x &&
+               octopus.position.y < wizard.position.y + wizard.pixels.height &&
+               octopus.position.y + octopus.pixels.height > wizard.position.y
            ) {
-               this.score += 1;
-               console.log("Score:", this.score);
+               wizard.position.x = Math.random() * (width - wizard.pixels.width);
+               wizard.position.y = Math.random() * (height - wizard.pixels.height);
 
-               coin.position.x = Math.random() * (width - coin.pixels.width);
-               coin.position.y = Math.random() * (height - coin.pixels.height);
+               console.log("Wizard teleported!");
            }
        };
 
@@ -88,10 +92,10 @@ class GameLevelOcean {
            const objects = gameEnv.gameObjects || [];
 
            const octopus = objects.find(obj => obj.id === "Octopus");
-           const coin = objects.find(obj => obj.id === "Coin");
+           const wizard = objects.find(obj => obj.id === "Wizard");
 
-           if (octopus && coin) {
-               this.handleCoinCollision(octopus, coin);
+           if (octopus && wizard) {
+               this.handleWizardCollision(octopus, wizard);
            }
        };
    }
