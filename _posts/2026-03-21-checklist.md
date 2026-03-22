@@ -221,6 +221,7 @@ export { GameControl };
 ---
 
 # CS 111 Project Checklist
+This project demonstrates many core computer science concepts through the development of interactive game levels. It successfully uses object-oriented programming with multiple classes such as Player, Shark, NPC, and Barrier, along with object instantiation and structured game environments. The game also includes strong use of control structures like loops and conditionals, multiple data types such as numbers, strings, and objects, and mathematical and boolean operators for movement and logic. Additionally, input/output is partially implemented through player movement and rendering on the canvas, and gameplay testing can be performed through the GameRunner.
 
 ## Object-Oriented Programming
 - Writing Classes  
@@ -276,6 +277,5 @@ export { GameControl };
 
 ## Summary
 
-This project demonstrates many core computer science concepts through the development of interactive game levels. It successfully uses object-oriented programming with multiple classes such as Player, Shark, NPC, and Barrier, along with object instantiation and structured game environments. The game also includes strong use of control structures like loops and conditionals, multiple data types such as numbers, strings, and objects, and mathematical and boolean operators for movement and logic. Additionally, input/output is partially implemented through player movement and rendering on the canvas, and gameplay testing can be performed through the GameRunner.
 
 However, there are still several advanced features that are not fully implemented yet. The project does not include inheritance hierarchies using `extends`, method overriding, or constructor chaining with `super()`. It also lacks API integration, asynchronous programming, and JSON parsing for external data. Debugging features such as console logging, hitbox visualization toggles, and DevTools inspection are not clearly demonstrated, and documentation could be expanded with more detailed comments and explanations. Adding these features would make the project more complete and align it fully with all checklist requirements.
