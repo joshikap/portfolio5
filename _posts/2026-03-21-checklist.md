@@ -5,55 +5,117 @@ title: CS 111 Checklist
 description: This is a checklist of game objects that should be implemented into the three levels of our game code, 
 permalink: /checklist
 ---
-
-## Basic Game: Background, Custom Player
+## Basic Game: Ocean Level
 
 {% capture challenge1 %}
-Run the basic game. Use WASD or arrow keys to move Chill Guy around the desert.
+Explore the ocean! Move the octopus and avoid the shark while interacting with the goldfish.
 {% endcapture %}
 
 {% capture code1 %}
-// Import for GameRunner
 import GameControl from '/assets/js/GameEnginev1/essentials/GameControl.js';
-// Level Code
 import GameEnvBackground from '/assets/js/GameEnginev1/essentials/GameEnvBackground.js';
 import Player from '/assets/js/GameEnginev1/essentials/Player.js';
+import Npc from '/assets/js/GameEnginev1/essentials/Npc.js';
+import Shark from '/assets/js/GameEnginev1/Shark.js';
 
-class CustomLevel {
-  constructor(gameEnv) {
-    const path = gameEnv.path;
+class GameLevelOcean2 {
+   constructor(gameEnv) {
 
-    const bgData = {
-        name: 'custom_bg',
-        src: path + "/images/gamebuilder/bg/clouds.jpg",
-        pixels: { height: 720, width: 1280 }
-    };
+       const path = gameEnv.path;
+       const width = gameEnv.innerWidth;
+       const height = gameEnv.innerHeight;
 
-    const playerData = {
-      id: 'Hero',
-      src: path + "/images/gamify/chillguy.png",
-      SCALE_FACTOR: 5,
-      STEP_FACTOR: 1000,
-      ANIMATION_RATE: 50,
-      INIT_POSITION: { x: 100, y: 300 },
-      pixels: { height: 512, width: 384 },
-      orientation: { rows: 4, columns: 3 },
-      down: { row: 0, start: 0, columns: 3 },
-      right: { row: 1, start: 0, columns: 3 },
-      left: { row: 2, start: 0, columns: 3 },
-      up: { row: 3, start: 0, columns: 3 },
-      hitbox: { widthPercentage: 0.45, heightPercentage: 0.2 },
-      keypress: { up: 87, left: 65, down: 83, right: 68 }
-    };
+       const bgData = {
+           id: "Water",
+           src: path + "/images/gamify/water/space.png",
+           pixels: { height: 1200, width: 857 }
+       };
 
-    this.classes = [
-      { class: GameEnvBackground, data: bgData },
-      { class: Player, data: playerData },
-    ];
-  }
+       const sprite_data_shark = {
+           id: 'Shark',
+           greeting: "Enemy Shark",
+           src: path + "/images/gamify/water/shark.png",
+           SCALE_FACTOR: 5,
+           ANIMATION_RATE: 100,
+           pixels: {height: 225, width: 225},
+           INIT_POSITION: { x: Math.random() * width, y: Math.random() * height },
+           orientation: {rows: 1, columns: 1 },
+           down: {row: 0, start: 0, columns: 1 }, 
+           hitbox: { widthPercentage: 0.25, heightPercentage: 0.55 },
+           speed: 5,
+           direction: {
+               x: Math.random() > 0.5 ? 1 : -1,
+               y: Math.random() > 0.5 ? 1 : -1
+           },
+
+           updatePosition: function () {
+               this.INIT_POSITION.x += this.direction.x * this.speed;
+               this.INIT_POSITION.y += this.direction.y * this.speed;
+
+               if (this.INIT_POSITION.x <= 0 || this.INIT_POSITION.x >= width) {
+                   this.direction.x *= -1;
+               }
+               if (this.INIT_POSITION.y <= 0 || this.INIT_POSITION.y >= height) {
+                   this.direction.y *= -1;
+               }
+
+               const spriteElement = document.getElementById(this.id);
+               if (spriteElement) {
+                   spriteElement.style.transform = this.direction.x === -1 ? "scaleX(-1)" : "scaleX(1)";
+                   spriteElement.style.left = this.INIT_POSITION.x + 'px';
+                   spriteElement.style.top = this.INIT_POSITION.y + 'px';
+               }
+           },
+
+           randomizeDirection: function () {
+               this.direction.x = Math.random() > 0.5 ? 1 : -1;
+               this.direction.y = Math.random() > 0.5 ? 1 : -1;
+           }
+       };
+
+       setInterval(() => { sprite_data_shark.updatePosition(); }, 100);
+       setInterval(() => { sprite_data_shark.randomizeDirection(); }, 2000);
+
+       const sprite_data_goldfish = {
+           id: "Goldfish",
+           greeting: "Be careful of the shark!",
+           src: path + "/images/gamify/water/gold.png",
+           SCALE_FACTOR: 6,
+           ANIMATION_RATE: 50,
+           INIT_POSITION: { x: width * 0.3, y: height * 0.5 },
+           pixels: { width: 200, height: 100 },
+           orientation: { rows: 1, columns: 2 },
+           down: { row: 0, start: 0, columns: 2 },
+           hitbox: { widthPercentage: 0.25, heightPercentage: 0.4 }
+       };
+
+       const sprite_data_octopus = {
+           id: "Octopus",
+           greeting: "Hi I am Octopus!",
+           src: path + "/images/gamify/water/octopus.png",
+           SCALE_FACTOR: 5,
+           ANIMATION_RATE: 100,
+           INIT_POSITION: { x: width * 0.7, y: height * 0.6 },
+           pixels: { height: 250, width: 167 },
+           orientation: { rows: 3, columns: 2 },
+           up: { row: 2, start: 0, columns: 2 },
+           left: { row: 1, start: 0, columns: 2 },
+           right: { row: 1, start: 0, columns: 2 },
+           down: { row: 0, start: 0, columns: 2 },
+           idle: { row: 0, start: 0, columns: 1 },
+           hitbox: { widthPercentage: 0.4, heightPercentage: 0.4 }
+       };
+
+       this.classes = [
+           { class: GameEnvBackground, data: bgData },
+           { class: Player, data: sprite_data_octopus },
+           { class: Shark, data: sprite_data_shark },
+           { class: Npc, data: sprite_data_goldfish },
+       ];
+   }
 }
 
-export const gameLevelClasses = [CustomLevel];
+export const gameLevelClasses = [GameLevelOcean2];
 export { GameControl };
 {% endcapture %}
 
@@ -65,28 +127,6 @@ export { GameControl };
 
 ---
 
-## Combine Game Levels
-
-{% capture challenge2 %}
-Switch between levels using ESC.
-{% endcapture %}
-
-{% capture code2 %}
-import GameControl from "/assets/js/GameEnginev1/essentials/GameControl.js";
-import GameLevelWater from "/assets/js/GameEnginev1/GameLevelWater.js";
-import GameLevelParallaxFish from "/assets/js/GameEnginev1/GameLevelParallaxFish.js";
-
-export const gameLevelClasses = [GameLevelWater, GameLevelParallaxFish];
-export { GameControl };
-{% endcapture %}
-
-{% include game-runner.html
-   runner_id="game2"
-   challenge=challenge2
-   code=code2
-%}
-
----
 
 # ✅ CS 111 Project Checklist
 
