@@ -128,13 +128,12 @@ export { GameControl };
 ---
 
 
-# ✅ CS 111 Project Checklist
+# CS 111 Project Checklist
 
 This checklist shows all required programming concepts demonstrated in the game.
 
----
 
-## 🧠 Object-Oriented Programming
+## Object-Oriented Programming
 - Writing Classes  
 - Methods & Parameters  
 - Instantiation & Objects  
@@ -142,32 +141,32 @@ This checklist shows all required programming concepts demonstrated in the game.
 - Method Overriding  
 - Constructor Chaining  
 
----
 
-## 🔁 Control Structures
+
+## Control Structures
 - Iteration  
 - Conditionals  
 - Nested Conditions  
 
----
 
-## 🔢 Data Types
+
+## Data Types
 - Numbers  
 - Strings  
 - Booleans  
 - Arrays  
 - Objects (JSON)  
 
----
 
-## ➕ Operators
+
+## Operators
 - Mathematical Operators  
 - String Operations  
 - Boolean Expressions  
 
----
 
-## 🎮 Input / Output
+
+## Input / Output
 - Keyboard Input  
 - Canvas Rendering  
 - GameEnv Configuration  
@@ -175,16 +174,16 @@ This checklist shows all required programming concepts demonstrated in the game.
 - Asynchronous I/O  
 - JSON Parsing  
 
----
 
-## 📝 Documentation
+
+## Documentation
 - Code Comments  
 - Mini-Lesson Documentation  
 - Code Highlights  
 
----
 
-## 🐞 Debugging
+
+## Debugging
 - Console Debugging  
 - Hit Box Visualization  
 - Source-Level Debugging  
@@ -192,9 +191,9 @@ This checklist shows all required programming concepts demonstrated in the game.
 - Application Debugging  
 - Element Inspection  
 
----
 
-## ✅ Testing & Verification
+
+## Testing & Verification
 - Gameplay Testing  
 - Integration Testing  
 - API Error Handling  
