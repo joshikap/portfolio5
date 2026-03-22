@@ -2,7 +2,7 @@
 layout: post
 codemirror: true
 title: CS 111 Checklist 
-description: Game runner with checklist of required concepts.
+description: This is a checklist of game objects that should be implemented into the three levels of our game code, 
 permalink: /checklist
 ---
 
@@ -95,28 +95,28 @@ This checklist shows all required programming concepts demonstrated in the game.
 ---
 
 ## 🧠 Object-Oriented Programming
-- [ ] Writing Classes  
-- [ ] Methods & Parameters  
-- [ ] Instantiation & Objects  
-- [ ] Inheritance (Basic)  
-- [ ] Method Overriding  
-- [ ] Constructor Chaining  
+- Writing Classes  
+- Methods & Parameters  
+- Instantiation & Objects  
+- Inheritance (Basic)  
+- Method Overriding  
+- Constructor Chaining  
 
 ---
 
 ## 🔁 Control Structures
-- [ ] Iteration  
-- [ ] Conditionals  
-- [ ] Nested Conditions  
+- Iteration  
+- Conditionals  
+- Nested Conditions  
 
 ---
 
 ## 🔢 Data Types
-- [ ] Numbers  
-- [ ] Strings  
-- [ ] Booleans  
-- [ ] Arrays  
-- [ ] Objects (JSON)  
+- Numbers  
+- Strings  
+- Booleans  
+- Arrays  
+- Objects (JSON)  
 
 ---
 
