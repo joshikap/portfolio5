@@ -121,40 +121,40 @@ This checklist shows all required programming concepts demonstrated in the game.
 ---
 
 ## ➕ Operators
-- [ ] Mathematical Operators  
-- [ ] String Operations  
-- [ ] Boolean Expressions  
+- Mathematical Operators  
+- String Operations  
+- Boolean Expressions  
 
 ---
 
 ## 🎮 Input / Output
-- [ ] Keyboard Input  
-- [ ] Canvas Rendering  
-- [ ] GameEnv Configuration  
-- [ ] API Integration  
-- [ ] Asynchronous I/O  
-- [ ] JSON Parsing  
+- Keyboard Input  
+- Canvas Rendering  
+- GameEnv Configuration  
+- API Integration  
+- Asynchronous I/O  
+- JSON Parsing  
 
 ---
 
 ## 📝 Documentation
-- [ ] Code Comments  
-- [ ] Mini-Lesson Documentation  
-- [ ] Code Highlights  
+- Code Comments  
+- Mini-Lesson Documentation  
+- Code Highlights  
 
 ---
 
 ## 🐞 Debugging
-- [ ] Console Debugging  
-- [ ] Hit Box Visualization  
-- [ ] Source-Level Debugging  
-- [ ] Network Debugging  
-- [ ] Application Debugging  
-- [ ] Element Inspection  
+- Console Debugging  
+- Hit Box Visualization  
+- Source-Level Debugging  
+- Network Debugging  
+- Application Debugging  
+- Element Inspection  
 
 ---
 
 ## ✅ Testing & Verification
-- [ ] Gameplay Testing  
-- [ ] Integration Testing  
-- [ ] API Error Handling  
+- Gameplay Testing  
+- Integration Testing  
+- API Error Handling  
