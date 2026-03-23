@@ -221,7 +221,9 @@ export { GameControl };
 ---
 
 # CS 111 Project Checklist
-This project demonstrates many core computer science concepts through the development of interactive game levels. It successfully uses object-oriented programming with multiple classes such as Player, Shark, NPC, and Barrier, along with object instantiation and structured game environments. The game also includes strong use of control structures like loops and conditionals, multiple data types such as numbers, strings, and objects, and mathematical and boolean operators for movement and logic. Additionally, input/output is partially implemented through player movement and rendering on the canvas, and gameplay testing can be performed through the GameRunner.
+ Player, Shark, NPC, and Barrier, along with object instantiation and structured game environments. The game also includes strong use of control structures like loops and conditionals.
+ 
+multiple data types such as numbers, strings, and objects, and mathematical and boolean operators for movement and logic. 
 
 ## Object-Oriented Programming
 - Writing Classes  
