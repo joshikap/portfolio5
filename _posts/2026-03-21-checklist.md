@@ -114,6 +114,12 @@ export { GameControl };
 
 ---
 
+
+
+# CS 111 Project Checklist
+ Player, Shark, NPC, and Barrier, along with object instantiation and structured game environments. The game also includes strong use of control structures like loops and conditionals.
+ 
+multiple data types such as numbers, strings, and objects, and mathematical and boolean operators for movement and logic. 
 ## Maze Level (Barriers + Goal)
 
 {% capture challenge2 %}
@@ -220,11 +226,6 @@ export { GameControl };
 
 ---
 
-# CS 111 Project Checklist
- Player, Shark, NPC, and Barrier, along with object instantiation and structured game environments. The game also includes strong use of control structures like loops and conditionals.
- 
-multiple data types such as numbers, strings, and objects, and mathematical and boolean operators for movement and logic. 
-
 ## Object-Oriented Programming
 - Writing Classes  
 - Methods & Parameters  
@@ -232,6 +233,7 @@ multiple data types such as numbers, strings, and objects, and mathematical and 
 - Inheritance (Basic)  
 - Method Overriding  
 - Constructor Chaining  
+<img src="images/gamify/water/classes.png" alt="Classes Image">
 
 ## Control Structures
 - Iteration  
@@ -244,11 +246,13 @@ multiple data types such as numbers, strings, and objects, and mathematical and 
 - Booleans  
 - Arrays  
 - Objects (JSON)  
+<img src="images/gamify/water/numbers.png" alt="Numbers Image">
 
 ## Operators
 - Mathematical Operators  
 - String Operations  
 - Boolean Expressions  
+<img src="images/gamify/water/math.png" alt="Math Image">
 
 ## Input / Output
 - Keyboard Input  
