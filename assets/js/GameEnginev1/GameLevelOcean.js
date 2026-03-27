@@ -1,6 +1,8 @@
 import GameEnvBackground from './essentials/GameEnvBackground.js';
 import Player from './essentials/Player.js';
 import Npc from './essentials/Npc.js';
+import AINpc from './essentials/AINpc.js';
+import Leaderboard from './Leaderboard.js';
 
 class GameLevelOcean {
 
@@ -11,6 +13,12 @@ class GameLevelOcean {
         const height = gameEnv.innerHeight;
 
         this.score = 0;
+        
+        // Initialize leaderboard
+        this.leaderboard = new Leaderboard({
+            title: 'Game Leaderboard',
+            storageKey: 'ocean-game-leaderboard'
+        });
 
         // Background
         const bgData = {
@@ -37,10 +45,10 @@ class GameLevelOcean {
             hitbox: { widthPercentage: 0.4, heightPercentage: 0.4 }
         };
 
-        // Shark - auto shows message on collision
+        // Shark - regular NPC
         const sharkData = {
             id: 'Shark',
-            greeting: "Careful! The shark is dangerous!",
+            greeting: "Watch out!",
             src: path + "/images/gamify/water/shark.png",
             SCALE_FACTOR: 5,
             ANIMATION_RATE: 100,
@@ -48,12 +56,7 @@ class GameLevelOcean {
             INIT_POSITION: { x: 100, y: 100 },
             orientation: { rows: 1, columns: 1 },
             down: { row: 0, start: 0, columns: 1 },
-            hitbox: { widthPercentage: 0.5, heightPercentage: 0.5 },
-
-            // Auto-interact on collision
-            interact: function() {
-                this.showReactionDialogue();
-            }
+            hitbox: { widthPercentage: 0.5, heightPercentage: 0.5 }
         };
 
         // Wizard — teleports on collision
@@ -78,12 +81,47 @@ class GameLevelOcean {
             }
         };
 
+        // Mario - AI NPC with patrol behavior
+        const marioData = {
+            id: "Mario",
+            greeting: "It's-a me, Mario! Let's-a go!",
+            src: path + "/images/mario.png",
+            SCALE_FACTOR: 4,
+            ANIMATION_RATE: 100,
+            pixels: { height: 32, width: 32 },
+            INIT_POSITION: { x: width * 0.3, y: height * 0.4 },
+            orientation: { rows: 1, columns: 1 },
+            down: { row: 0, start: 0, columns: 1 },
+            hitbox: { widthPercentage: 0.6, heightPercentage: 0.7 },
+            aiType: 'patrol',
+            aiSpeed: 1.5,
+            detectionRange: 150,
+            aiMoveInterval: 2
+        };
+
         this.classes = [
             { class: GameEnvBackground, data: bgData },
             { class: Player, data: octopusData },
             { class: Npc, data: sharkData },
-            { class: Npc, data: wizardData }
+            { class: Npc, data: wizardData },
+            { class: AINpc, data: marioData }
         ];
+    }
+
+    /**
+     * Save the player's score to the leaderboard
+     * @param {string} playerName - The name of the player
+     */
+    saveScore(playerName = 'Player') {
+        this.leaderboard.addScore(playerName, this.score, 'Ocean Level');
+    }
+
+    /**
+     * Update the player's score
+     * @param {number} points - Points to add to the score
+     */
+    updateScore(points = 0) {
+        this.score += points;
     }
 }
 
