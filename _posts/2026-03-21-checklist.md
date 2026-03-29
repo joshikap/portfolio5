@@ -9,21 +9,29 @@ permalink: /checklist
 
 <script>
 const data = [
-  ["Iteration", "Use loops for game object arrays, animation frames", "https://pages.opencodingsociety.com/js/iterations"],
-  ["Conditionals", "Implement collision detection, state transitions", "https://pages.opencodingsociety.com/js/nested-conditionals"],
-  ["Nested Conditions", "Complex game logic (e.g., power-up + collision + direction)", "https://pages.opencodingsociety.com/js/nested-conditionals"],
+  ["Iteration", "We used iteration when looping through arrays like `this.classes` to create and manage multiple game objects. This allows us to efficiently handle all game elements without repeating code.", "https://pages.opencodingsociety.com/js/iterations"],
 
-  ["Data Types", "", ""],
-  ["Numbers", "Position, velocity, score tracking", "Add link here"],
-  ["Strings", "Character names, sprite paths, game states", "https://pages.opencodingsociety.com/js/strings"],
-  ["Booleans", "Flags (isJumping, isPaused, isVulnerable)", "https://pages.opencodingsociety.com/js/booleans"],
-  ["Arrays", "Game object collections, level data", "https://pages.opencodingsociety.com/js/arrays"],
-  ["Objects (JSON)", "Configuration objects, sprite data", "https://pages.opencodingsociety.com/js/json"],
+  ["Conditionals", "We used conditionals to control game behavior such as collision detection and triggering actions like teleporting the wizard. These checks determine how the game responds to different situations.", "https://pages.opencodingsociety.com/js/nested-conditionals"],
 
-  ["Operators", "", ""],
-  ["Mathematical", "Physics calculations (gravity, velocity, collision)", "https://pages.opencodingsociety.com/js/math"],
-  ["String Operations", "Path concatenation, text display", "https://pages.opencodingsociety.com/js/strings"],
-  ["Boolean Expressions", "Compound conditions in game logic", "https://pages.opencodingsociety.com/js/booleans"]
+  ["Nested Conditions", "We used nested conditions to handle more complex logic where multiple conditions must be true, such as combining collisions with other game states or actions.", "https://pages.opencodingsociety.com/js/nested-conditionals"],
+
+
+  ["Numbers", "We used numbers to represent positions, movement, and scoring (such as x and y coordinates). These values control where objects are and how they move in the game.", "Add link here"],
+
+  ["Strings", "We used strings for text like greetings and image file paths. These allow us to display messages and load assets in the game.", "https://pages.opencodingsociety.com/js/strings"],
+
+  ["Booleans", "We used booleans to represent true/false states like collision detection or game states. These help control whether certain actions should happen.", "https://pages.opencodingsociety.com/js/booleans"],
+
+  ["Arrays", "We used arrays such as `this.classes` to store and manage all game objects in one place. This makes it easier to loop through and update everything.", "https://pages.opencodingsociety.com/js/arrays"],
+
+  ["Objects (JSON)", "We used objects to organize sprite data like position, speed, animations, and hitboxes. This keeps related data grouped and easy to manage.", "https://pages.opencodingsociety.com/js/json"],
+
+
+  ["Mathematical", "We used mathematical operations for movement, speed, and randomness using functions like `Math.random()` and position updates. This helps control physics and behavior.", "https://pages.opencodingsociety.com/js/math"],
+
+  ["String Operations", "We used string operations to combine file paths for images using concatenation. This allows the game to correctly load assets from folders.", "https://pages.opencodingsociety.com/js/strings"],
+
+  ["Boolean Expressions", "We used boolean expressions to check multiple conditions at once, such as collision boundaries or direction checks. These help control game logic.", "https://pages.opencodingsociety.com/js/booleans"]
 ];
 
 const container = document.getElementById("checklist-table");
