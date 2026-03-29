@@ -9,21 +9,21 @@ permalink: /checklist
 
 <script>
 const data = [
-  ["Iteration", "Use loops for game object arrays, animation frames", "Add link here"],
-  ["Conditionals", "Implement collision detection, state transitions", "Add link here"],
-  ["Nested Conditions", "Complex game logic (e.g., power-up + collision + direction)", "Add link here"],
+  ["Iteration", "Use loops for game object arrays, animation frames", "https://pages.opencodingsociety.com/js/iterations"],
+  ["Conditionals", "Implement collision detection, state transitions", "https://pages.opencodingsociety.com/js/nested-conditionals"],
+  ["Nested Conditions", "Complex game logic (e.g., power-up + collision + direction)", "https://pages.opencodingsociety.com/js/nested-conditionals"],
 
   ["Data Types", "", ""],
   ["Numbers", "Position, velocity, score tracking", "Add link here"],
-  ["Strings", "Character names, sprite paths, game states", "Add link here"],
-  ["Booleans", "Flags (isJumping, isPaused, isVulnerable)", "Add link here"],
-  ["Arrays", "Game object collections, level data", "Add link here"],
-  ["Objects (JSON)", "Configuration objects, sprite data", "Add link here"],
+  ["Strings", "Character names, sprite paths, game states", "https://pages.opencodingsociety.com/js/strings"],
+  ["Booleans", "Flags (isJumping, isPaused, isVulnerable)", "https://pages.opencodingsociety.com/js/booleans"],
+  ["Arrays", "Game object collections, level data", "https://pages.opencodingsociety.com/js/arrays"],
+  ["Objects (JSON)", "Configuration objects, sprite data", "https://pages.opencodingsociety.com/js/json"],
 
   ["Operators", "", ""],
-  ["Mathematical", "Physics calculations (gravity, velocity, collision)", "Add link here"],
-  ["String Operations", "Path concatenation, text display", "Add link here"],
-  ["Boolean Expressions", "Compound conditions in game logic", "Add link here"]
+  ["Mathematical", "Physics calculations (gravity, velocity, collision)", "https://pages.opencodingsociety.com/js/math"],
+  ["String Operations", "Path concatenation, text display", "https://pages.opencodingsociety.com/js/strings"],
+  ["Boolean Expressions", "Compound conditions in game logic", "https://pages.opencodingsociety.com/js/booleans"]
 ];
 
 const container = document.getElementById("checklist-table");
@@ -38,7 +38,7 @@ table.style.backgroundColor = "#0d1117";
 table.style.color = "#e6edf3";
 table.style.fontFamily = "Arial, sans-serif";
 
-// 🔥 HEADER ROW
+// HEADER
 const headerRow = document.createElement("tr");
 
 ["Concept", "How we used it in our code", "Link to HW or Lesson"].forEach(text => {
@@ -53,19 +53,33 @@ const headerRow = document.createElement("tr");
 
 table.appendChild(headerRow);
 
-// build rows
+// ROWS
 data.forEach(rowData => {
   const row = document.createElement("tr");
 
-  rowData.forEach(cellData => {
+  rowData.forEach((cellData, index) => {
     const cell = document.createElement("td");
-    cell.textContent = cellData;
     cell.style.border = "1px solid #ff4da6";
     cell.style.padding = "10px";
+
+    // make links clickable
+    if (index === 2 && cellData && cellData.startsWith("http")) {
+      const link = document.createElement("a");
+      link.href = cellData;
+      link.textContent = "Open Link";
+      link.target = "_blank";
+      link.style.color = "#58a6ff";
+      link.style.textDecoration = "underline";
+
+      cell.appendChild(link);
+    } else {
+      cell.textContent = cellData;
+    }
+
     row.appendChild(cell);
   });
 
-  // section headers
+  // section headers styling
   if (rowData[1] === "" && rowData[2] === "") {
     row.style.fontWeight = "bold";
     row.style.backgroundColor = "#161b22";
