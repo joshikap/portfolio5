@@ -59,28 +59,6 @@ class GameLevelOcean {
             hitbox: { widthPercentage: 0.5, heightPercentage: 0.5 }
         };
 
-        // Wizard — teleports on collision
-        const wizardData = {
-            id: "Wizard",
-            greeting: "Magic Wizard!",
-            src: path + "/images/gamify/water/wizard.png",
-            SCALE_FACTOR: 3,
-            ANIMATION_RATE: 100,
-            pixels: { height: 256, width: 256 },
-            INIT_POSITION: { x: width * 0.5, y: height * 0.5 },
-            orientation: { rows: 1, columns: 1 },
-            down: { row: 0, start: 0, columns: 1 },
-            hitbox: { widthPercentage: 0.8, heightPercentage: 0.8 },
-
-            reaction: function() {
-                const scaledWidth = this.pixels.width / this.spriteData.SCALE_FACTOR;
-                const scaledHeight = this.pixels.height / this.spriteData.SCALE_FACTOR;
-                this.position.x = Math.random() * (width - scaledWidth);
-                this.position.y = Math.random() * (height - scaledHeight);
-                console.log("Wizard teleported to", this.position.x, this.position.y);
-            }
-        };
-
         // Mario - AI NPC with patrol behavior
         const marioData = {
             id: "Mario",
@@ -103,7 +81,6 @@ class GameLevelOcean {
             { class: GameEnvBackground, data: bgData },
             { class: Player, data: octopusData },
             { class: Npc, data: sharkData },
-            { class: Npc, data: wizardData },
             { class: AINpc, data: marioData }
         ];
     }
