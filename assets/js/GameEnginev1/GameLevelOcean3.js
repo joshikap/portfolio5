@@ -4,6 +4,110 @@ import Npc from './essentials/Npc.js';
 import Barrier from './essentials/Barrier.js';
 import Shark from './Shark.js';
 
+// Leaderboard Manager
+class LeaderboardManager {
+  constructor() {
+    this.storageKey = 'oceanGameLeaderboard';
+    this.maxScores = 10;
+  }
+
+  addScore(playerName, score) {
+    let leaderboard = this.getLeaderboard();
+    leaderboard.push({ playerName, score, date: new Date().toISOString() });
+    leaderboard.sort((a, b) => b.score - a.score);
+    leaderboard = leaderboard.slice(0, this.maxScores);
+    localStorage.setItem(this.storageKey, JSON.stringify(leaderboard));
+    return leaderboard;
+  }
+
+  getLeaderboard() {
+    const data = localStorage.getItem(this.storageKey);
+    return data ? JSON.parse(data) : [];
+  }
+
+  displayLeaderboard() {
+    const leaderboard = this.getLeaderboard();
+    let html = '<div style="background: rgba(0,0,0,0.8); color: #FFD700; padding: 15px; border-radius: 8px; font-family: Arial, sans-serif;">';
+    html += '<h3 style="margin-top: 0; text-align: center;">🏆 LEADERBOARD 🏆</h3>';
+    if (leaderboard.length === 0) {
+      html += '<p style="text-align: center;">No scores yet. Be the first!</p>';
+    } else {
+      html += '<ol style="margin: 10px 0; padding-left: 20px;">';
+      leaderboard.forEach((entry, index) => {
+        html += `<li>${entry.playerName}: <strong>${entry.score}</strong> pts</li>`;
+      });
+      html += '</ol>';
+    }
+    html += '</div>';
+    return html;
+  }
+}
+
+// Game Scoring System
+class GameScorer {
+  constructor(gameEnv) {
+    this.gameEnv = gameEnv;
+    this.score = 0;
+    this.coinsCollected = 0;
+    this.totalCoins = 0;
+    this.scoreboard = null;
+    this.createScoreboard();
+  }
+
+  createScoreboard() {
+    this.scoreboard = document.createElement('div');
+    this.scoreboard.id = 'game-scoreboard';
+    this.scoreboard.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #FFD700;
+      padding: 15px 20px;
+      border-radius: 8px;
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      z-index: 1000;
+      border: 2px solid #FFD700;
+    `;
+    this.updateDisplay();
+    document.body.appendChild(this.scoreboard);
+  }
+
+  updateDisplay() {
+    if (this.scoreboard) {
+      this.scoreboard.innerHTML = `
+        💰 Coins: ${this.coinsCollected}/${this.totalCoins}<br>
+        ⭐ Score: ${this.score}
+      `;
+    }
+  }
+
+  collectCoin(points = 10) {
+    this.coinsCollected++;
+    this.score += points;
+    this.updateDisplay();
+  }
+
+  setTotalCoins(count) {
+    this.totalCoins = count;
+    this.updateDisplay();
+  }
+
+  finalizeScore(playerName = 'Player') {
+    const leaderboard = new LeaderboardManager();
+    leaderboard.addScore(playerName, this.score);
+    return this.score;
+  }
+
+  destroy() {
+    if (this.scoreboard && this.scoreboard.parentNode) {
+      this.scoreboard.parentNode.removeChild(this.scoreboard);
+    }
+  }
+}
+
 class GameLevelOcean {
 
   constructor(gameEnv) {
@@ -11,6 +115,9 @@ class GameLevelOcean {
     let width = gameEnv.innerWidth;
     let height = gameEnv.innerHeight;
     let path = gameEnv.path;
+
+    // Initialize scoring system
+    gameEnv.gameScorer = new GameScorer(gameEnv);
 
     // 🌊 Background
     const bgData = {
@@ -62,6 +169,28 @@ class GameLevelOcean {
         hitbox: { widthPercentage: 0.3, heightPercentage: 0.4 }
     };
 
+    // 💰 Coins (collectibles for points)
+    const sprite_data_coin = {
+        id: 'Coin',
+        src: path + "/images/gamify/water/gold.png", // Using gold image for coin
+        SCALE_FACTOR: 8,
+        ANIMATION_RATE: 50,
+        pixels: { width: 200, height: 100 },
+        orientation: { rows: 1, columns: 2 },
+        down: { row: 0, start: 0, columns: 2 },
+        hitbox: { widthPercentage: 0.4, heightPercentage: 0.4 }
+    };
+
+    // Coin positions throughout the maze
+    const coinPositions = [
+        { x: width * 0.3, y: height * 0.3 },
+        { x: width * 0.5, y: height * 0.25 },
+        { x: width * 0.35, y: height * 0.5 },
+        { x: width * 0.65, y: height * 0.4 },
+        { x: width * 0.4, y: height * 0.65 },
+        { x: width * 0.7, y: height * 0.6 }
+    ];
+
     // 🦈 Shark
     const sprite_data_shark = {
         id: 'Shark',
@@ -109,8 +238,31 @@ class GameLevelOcean {
       { class: Shark, data: sprite_data_shark },
       { class: Npc, data: sprite_data_goldfish },
 
+      // Add coins to the game
+      ...coinPositions.map((pos, index) => ({
+        class: Npc,
+        data: {
+          ...sprite_data_coin,
+          id: `Coin${index}`,
+          INIT_POSITION: pos,
+          greeting: "+10 Points!",
+          interact: function(player, npc) {
+            if (gameEnv.gameScorer) {
+              gameEnv.gameScorer.collectCoin(10);
+            }
+            // Remove the coin from game after collection
+            this.destroy();
+          }
+        }
+      })),
+
       ...mazeWalls.map(w => ({ class: Barrier, data: w }))
     ];
+
+    // Set total coins in the scoreboard
+    if (gameEnv.gameScorer) {
+      gameEnv.gameScorer.setTotalCoins(coinPositions.length);
+    }
   }
 }
 
