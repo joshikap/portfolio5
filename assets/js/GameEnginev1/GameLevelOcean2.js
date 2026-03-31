@@ -154,6 +154,154 @@ class GameLevelOcean2 {
            sprite_data_shark.updatePosition();
        }, 100);
 
+       // 🦈 Shark 2
+       const sprite_data_shark2 = {
+           id: 'Shark2',
+           greeting: "Enemy Shark",
+           src: path + "/images/gamify/water/shark.png",
+           SCALE_FACTOR: 5,
+           ANIMATION_RATE: 100,
+           pixels: {height: 225, width: 225},
+
+           INIT_POSITION: { 
+               x: Math.random() * width, 
+               y: Math.random() * height 
+           },
+
+           orientation: {rows: 1, columns: 1 },
+           down: {row: 0, start: 0, columns: 1 }, 
+           hitbox: { widthPercentage: 0.25, heightPercentage: 0.55 },
+
+           speed: 3,
+           direction: {
+               x: Math.random() > 0.5 ? 1 : -1,
+               y: Math.random() > 0.5 ? 1 : -1
+           },
+           gameEnv: gameEnv,
+
+           updatePosition: function () {
+               // Get the octopus (player) position
+               const octopusElement = document.getElementById('Octopus');
+               if (octopusElement) {
+                   const octopusX = parseFloat(octopusElement.style.left);
+                   const octopusY = parseFloat(octopusElement.style.top);
+                   
+                   // Calculate direction towards octopus
+                   const dx = octopusX - this.INIT_POSITION.x;
+                   const dy = octopusY - this.INIT_POSITION.y;
+                   const distance = Math.sqrt(dx * dx + dy * dy);
+                   
+                   if (distance > 0) {
+                       // Normalize and set direction
+                       this.direction.x = dx / distance;
+                       this.direction.y = dy / distance;
+                   }
+               }
+
+               // Move towards target
+               this.INIT_POSITION.x += this.direction.x * this.speed;
+               this.INIT_POSITION.y += this.direction.y * this.speed;
+
+               // Keep shark in bounds
+               if (this.INIT_POSITION.x <= 0 || this.INIT_POSITION.x >= width) {
+                   this.direction.x *= -1;
+               }
+               if (this.INIT_POSITION.y <= 0 || this.INIT_POSITION.y >= height) {
+                   this.direction.y *= -1;
+               }
+
+               const spriteElement = document.getElementById(this.id);
+               if (spriteElement) {
+                   spriteElement.style.transform = this.direction.x < 0 ? "scaleX(-1)" : "scaleX(1)";
+                   spriteElement.style.left = this.INIT_POSITION.x + 'px';
+                   spriteElement.style.top = this.INIT_POSITION.y + 'px';
+               }
+           },
+
+           randomizeDirection: function () {
+               this.direction.x = Math.random() > 0.5 ? 1 : -1;
+               this.direction.y = Math.random() > 0.5 ? 1 : -1;
+           }
+       };
+
+       setInterval(() => {
+           sprite_data_shark2.updatePosition();
+       }, 100);
+
+       // 🦈 Shark 3
+       const sprite_data_shark3 = {
+           id: 'Shark3',
+           greeting: "Enemy Shark",
+           src: path + "/images/gamify/water/shark.png",
+           SCALE_FACTOR: 5,
+           ANIMATION_RATE: 100,
+           pixels: {height: 225, width: 225},
+
+           INIT_POSITION: { 
+               x: Math.random() * width, 
+               y: Math.random() * height 
+           },
+
+           orientation: {rows: 1, columns: 1 },
+           down: {row: 0, start: 0, columns: 1 }, 
+           hitbox: { widthPercentage: 0.25, heightPercentage: 0.55 },
+
+           speed: 3,
+           direction: {
+               x: Math.random() > 0.5 ? 1 : -1,
+               y: Math.random() > 0.5 ? 1 : -1
+           },
+           gameEnv: gameEnv,
+
+           updatePosition: function () {
+               // Get the octopus (player) position
+               const octopusElement = document.getElementById('Octopus');
+               if (octopusElement) {
+                   const octopusX = parseFloat(octopusElement.style.left);
+                   const octopusY = parseFloat(octopusElement.style.top);
+                   
+                   // Calculate direction towards octopus
+                   const dx = octopusX - this.INIT_POSITION.x;
+                   const dy = octopusY - this.INIT_POSITION.y;
+                   const distance = Math.sqrt(dx * dx + dy * dy);
+                   
+                   if (distance > 0) {
+                       // Normalize and set direction
+                       this.direction.x = dx / distance;
+                       this.direction.y = dy / distance;
+                   }
+               }
+
+               // Move towards target
+               this.INIT_POSITION.x += this.direction.x * this.speed;
+               this.INIT_POSITION.y += this.direction.y * this.speed;
+
+               // Keep shark in bounds
+               if (this.INIT_POSITION.x <= 0 || this.INIT_POSITION.x >= width) {
+                   this.direction.x *= -1;
+               }
+               if (this.INIT_POSITION.y <= 0 || this.INIT_POSITION.y >= height) {
+                   this.direction.y *= -1;
+               }
+
+               const spriteElement = document.getElementById(this.id);
+               if (spriteElement) {
+                   spriteElement.style.transform = this.direction.x < 0 ? "scaleX(-1)" : "scaleX(1)";
+                   spriteElement.style.left = this.INIT_POSITION.x + 'px';
+                   spriteElement.style.top = this.INIT_POSITION.y + 'px';
+               }
+           },
+
+           randomizeDirection: function () {
+               this.direction.x = Math.random() > 0.5 ? 1 : -1;
+               this.direction.y = Math.random() > 0.5 ? 1 : -1;
+           }
+       };
+
+       setInterval(() => {
+           sprite_data_shark3.updatePosition();
+       }, 100);
+
        // 🐠 Goldfish (NEW NPC)
        const sprite_data_goldfish = {
            id: "Goldfish",
@@ -173,7 +321,7 @@ class GameLevelOcean2 {
            hitbox: { widthPercentage: 0.25, heightPercentage: 0.4 }
        };
 
-       // � Coins (collectibles for points)
+       //  Coins (collectibles for points)
        const sprite_data_coin = {
            id: 'Coin',
            src: path + "/images/gamify/water/gold.png",
@@ -194,7 +342,7 @@ class GameLevelOcean2 {
            { x: width * 0.8, y: height * 0.7 }
        ];
 
-       // �🐙 Player
+       // 🐙 Player
        const sprite_data_octopus = {
            id: "Octopus",
            greeting: "Hi I am Octopus!",
@@ -221,6 +369,8 @@ class GameLevelOcean2 {
            { class: GameEnvBackground, data: bgData },
            { class: Player, data: sprite_data_octopus },
            { class: Shark, data: sprite_data_shark },
+           { class: Shark, data: sprite_data_shark2 },
+           { class: Shark, data: sprite_data_shark3 },
            { class: Npc, data: sprite_data_goldfish },
 
            // Add coins to the game
