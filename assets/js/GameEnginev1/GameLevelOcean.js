@@ -5,6 +5,65 @@ import AINpc from './essentials/AINpc.js';
 import Leaderboard from './Leaderboard.js';
 import DialogueSystem from './DialogueSystem.js';
 
+// Game Scoring System
+class GameScorer {
+  constructor(gameEnv) {
+    this.gameEnv = gameEnv;
+    this.score = 0;
+    this.coinsCollected = 0;
+    this.totalCoins = 0;
+    this.scoreboard = null;
+    this.createScoreboard();
+  }
+
+  createScoreboard() {
+    this.scoreboard = document.createElement('div');
+    this.scoreboard.id = 'game-scoreboard';
+    this.scoreboard.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #FFD700;
+      padding: 15px 20px;
+      border-radius: 8px;
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      z-index: 1000;
+      border: 2px solid #FFD700;
+    `;
+    this.updateDisplay();
+    document.body.appendChild(this.scoreboard);
+  }
+
+  updateDisplay() {
+    if (this.scoreboard) {
+      this.scoreboard.innerHTML = `
+        💰 Coins: ${this.coinsCollected}/${this.totalCoins}<br>
+        ⭐ Score: ${this.score}
+      `;
+    }
+  }
+
+  collectCoin(points = 10) {
+    this.coinsCollected++;
+    this.score += points;
+    this.updateDisplay();
+  }
+
+  setTotalCoins(count) {
+    this.totalCoins = count;
+    this.updateDisplay();
+  }
+
+  destroy() {
+    if (this.scoreboard && this.scoreboard.parentNode) {
+      this.scoreboard.parentNode.removeChild(this.scoreboard);
+    }
+  }
+}
+
 
 class GameLevelOcean {
 
@@ -16,6 +75,8 @@ class GameLevelOcean {
        const width = gameEnv.innerWidth;
        const height = gameEnv.innerHeight;
 
+       // Initialize scoring system
+       gameEnv.gameScorer = new GameScorer(gameEnv);
 
        this.score = 0;
 
@@ -98,8 +159,8 @@ class GameLevelOcean {
 
 
            reaction: function () {
-               if (this.dialogueSystem) {
-                   this.showReactionDialogue();
+               if (gameEnv.gameScorer) {
+                   gameEnv.gameScorer.collectCoin(10);
                }
            },
 
@@ -149,6 +210,10 @@ class GameLevelOcean {
                    if (gameEnv && gameEnv.currentLevel) {
                        gameEnv.currentLevel.updateScore(10);
                    }
+                   
+                   if (gameEnv.gameScorer) {
+                       gameEnv.gameScorer.collectCoin(10);
+                   }
 
 
                    // 🔥 MOVE COIN TO RANDOM LOCATION (LIKE DESERT NPC RELOCATION)
@@ -187,6 +252,11 @@ class GameLevelOcean {
            { class: Npc, data: sharkData },
            { class: Npc, data: cryptoData } // ✅ coin added properly
        ];
+       
+       // Set total coins in the scoreboard (Bitcoin is a single coin)
+       if (gameEnv.gameScorer) {
+           gameEnv.gameScorer.setTotalCoins(1);
+       }
    }
 
 
