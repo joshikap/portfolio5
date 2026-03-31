@@ -231,6 +231,18 @@ class GameLevelOcean2 {
                    id: `Coin${index}`,
                    INIT_POSITION: pos,
                    greeting: "+10 Points!",
+                   reaction: function() {
+                       if (gameEnv.gameScorer) {
+                           gameEnv.gameScorer.collectCoin(10);
+                       }
+                       // Find and remove the coin from game after collection
+                       const coinNpc = gameEnv.gameObjects.find(obj => 
+                           obj.spriteData && obj.spriteData.id === `Coin${index}`
+                       );
+                       if (coinNpc) {
+                           coinNpc.destroy();
+                       }
+                   },
                    interact: function(player, npc) {
                        if (gameEnv.gameScorer) {
                            gameEnv.gameScorer.collectCoin(10);
