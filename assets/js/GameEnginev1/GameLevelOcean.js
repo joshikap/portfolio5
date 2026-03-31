@@ -2,8 +2,66 @@ import GameEnvBackground from './essentials/GameEnvBackground.js';
 import Player from './essentials/Player.js';
 import Npc from './essentials/Npc.js';
 import AiNpc from './essentials/AiNpc.js';
-import Leaderboard from './Leaderboard.js';
 import DialogueSystem from './essentials/DialogueSystem.js';
+
+// Game Scoring System
+class GameScorer {
+  constructor(gameEnv) {
+    this.gameEnv = gameEnv;
+    this.score = 0;
+    this.coinsCollected = 0;
+    this.totalCoins = 0;
+    this.scoreboard = null;
+    this.createScoreboard();
+  }
+
+  createScoreboard() {
+    this.scoreboard = document.createElement('div');
+    this.scoreboard.id = 'game-scoreboard';
+    this.scoreboard.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #FFD700;
+      padding: 15px 20px;
+      border-radius: 8px;
+      font-family: Arial, sans-serif;
+      font-size: 18px;
+      font-weight: bold;
+      z-index: 1000;
+      border: 2px solid #FFD700;
+    `;
+    this.updateDisplay();
+    document.body.appendChild(this.scoreboard);
+  }
+
+  updateDisplay() {
+    if (this.scoreboard) {
+      this.scoreboard.innerHTML = `
+        💰 Coins: ${this.coinsCollected}/${this.totalCoins}<br>
+        ⭐ Score: ${this.score}
+      `;
+    }
+  }
+
+  collectCoin(points = 10) {
+    this.coinsCollected++;
+    this.score += points;
+    this.updateDisplay();
+  }
+
+  setTotalCoins(count) {
+    this.totalCoins = count;
+    this.updateDisplay();
+  }
+
+  destroy() {
+    if (this.scoreboard && this.scoreboard.parentNode) {
+      this.scoreboard.parentNode.removeChild(this.scoreboard);
+    }
+  }
+}
 
 class GameLevelOcean {
 
@@ -12,6 +70,9 @@ class GameLevelOcean {
        const path = gameEnv.path;
        const width = gameEnv.innerWidth;
        const height = gameEnv.innerHeight;
+
+       // Initialize scoring system
+       gameEnv.gameScorer = new GameScorer(gameEnv);
 
        this.score = 0;
 
@@ -75,6 +136,19 @@ class GameLevelOcean {
 
            hitbox: { widthPercentage: 0.2, heightPercentage: 0.2 },
 
+           dialogues: [
+               "You found a mysterious coin...",
+               "Crypto is risky but exciting!",
+               "To the moon 🚀",
+               "Digital treasure of the ocean 🌊"
+           ],
+
+           reaction: function () {
+               if (gameEnv.gameScorer) {
+                   gameEnv.gameScorer.collectCoin(10);
+               }
+           },
+
            interact: function () {
                if (!this.dialogueSystem) {
                    this.dialogueSystem = new DialogueSystem();
@@ -88,6 +162,58 @@ class GameLevelOcean {
 
                if (gameEnv && gameEnv.currentLevel) {
                    gameEnv.currentLevel.updateScore(10);
+               }
+
+               const buttonContainer = document.createElement('div');
+               buttonContainer.style.display = 'flex';
+               buttonContainer.style.marginTop = '10px';
+
+
+               const collectBtn = document.createElement('button');
+               collectBtn.textContent = "Collect Coin";
+               collectBtn.style.marginRight = '10px';
+
+
+               const leaveBtn = document.createElement('button');
+               leaveBtn.textContent = "Leave";
+
+
+               collectBtn.onclick = () => {
+                   // ✅ ADD SCORE
+                   if (gameEnv && gameEnv.currentLevel) {
+                       gameEnv.currentLevel.updateScore(10);
+                   }
+                   
+                   if (gameEnv.gameScorer) {
+                       gameEnv.gameScorer.collectCoin(10);
+                   }
+
+
+                   // 🔥 MOVE COIN TO RANDOM LOCATION (LIKE DESERT NPC RELOCATION)
+                   const scaledWidth = this.pixels.width / this.spriteData.SCALE_FACTOR;
+                   const scaledHeight = this.pixels.height / this.spriteData.SCALE_FACTOR;
+
+
+                   this.position.x = Math.random() * (width - scaledWidth);
+                   this.position.y = Math.random() * (height - scaledHeight);
+
+
+                   this.dialogueSystem.closeDialogue();
+               };
+
+
+               leaveBtn.onclick = () => {
+                   this.dialogueSystem.closeDialogue();
+               };
+
+
+               buttonContainer.appendChild(collectBtn);
+               buttonContainer.appendChild(leaveBtn);
+
+
+               const dialogueBox = document.getElementById('custom-dialogue-box-' + this.dialogueSystem.id);
+               if (dialogueBox) {
+                   dialogueBox.appendChild(buttonContainer);
                }
 
                this.position.x = Math.random() * width;
@@ -175,6 +301,11 @@ class GameLevelOcean {
            { class: Npc, data: cryptoData },
            { class: Npc, data: sprite_data_ocean_ai }
        ];
+       
+       // Set total coins in the scoreboard (Bitcoin is a single coin)
+       if (gameEnv.gameScorer) {
+           gameEnv.gameScorer.setTotalCoins(1);
+       }
    }
 
    saveScore(playerName = 'Player') {
