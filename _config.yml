@@ -22,7 +22,7 @@ github_repo: "portfolio5"
 baseurl: "" # the subpath of your site, e.g. /blog
 future: true
 
-# Build settings
+# Build settings.
 # --------------
 #
 # If you wish to use the gem-version of Minima with or without a Gemfile, use
