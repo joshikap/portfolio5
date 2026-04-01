@@ -152,24 +152,24 @@ class GameLevelOcean {
 
 
    // 🧠 AI NPC (OCEAN EXPERT)
-   const sprite_src_ocean = path + "/images/gamify/historyProf.png";
+   const sprite_src_ocean = path + "/images/gamify/wizard.png";
 
 
    const sprite_data_ocean = {
      id: "Professor Ocean",
-     greeting: "Hello! I'm an ocean expert! 🌊",
+     greeting: "Hello! I'm a wizard! ✨",
      src: sprite_src_ocean,
-     SCALE_FACTOR: 5,
+     SCALE_FACTOR: 3,
      ANIMATION_RATE: 10,
-     pixels: { height: 263, width: 559 },
+     pixels: { height: 300, width: 300 },
      INIT_POSITION: { x: width * 0.5, y: height * 0.3 },
-     orientation: { rows: 4, columns: 9 },
+     orientation: { rows: 1, columns: 1 },
 
 
-     down: { row: 3, start: 0, columns: 9 },
-     up: { row: 3, start: 0, columns: 9 },
-     left: { row: 3, start: 0, columns: 9 },
-     right: { row: 3, start: 0, columns: 9 },
+     down: { row: 0, start: 0, columns: 1 },
+     up: { row: 0, start: 0, columns: 1 },
+     left: { row: 0, start: 0, columns: 1 },
+     right: { row: 0, start: 0, columns: 1 },
 
 
      hitbox: { widthPercentage: 0.2, heightPercentage: 0.3 },
