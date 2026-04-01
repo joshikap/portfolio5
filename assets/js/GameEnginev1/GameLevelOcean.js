@@ -2,6 +2,7 @@ import GameEnvBackground from './essentials/GameEnvBackground.js';
 import Player from './essentials/Player.js';
 import Npc from './essentials/Npc.js';
 
+
 // =======================
 // 🎯 SCORE SYSTEM
 // =======================
