@@ -1,7 +1,8 @@
 import GameEnvBackground from './essentials/GameEnvBackground.js';
 import Player from './essentials/Player.js';
 import Npc from './essentials/Npc.js';
-
+import DialogueSystem from './DialogueSystem.js';
+import AiNpc from './essentials/AiNpc.js'; 
 
 // =======================
 // 🎯 SCORE SYSTEM
@@ -105,7 +106,7 @@ class GameLevelOcean {
       hitbox: { widthPercentage: 0.4, heightPercentage: 0.4 }
     };
 
-    // 🐠 CREATE 6 GOLDFISH (FIXED)
+    // 🐠 GOLD FISH
     const goldfishList = Array.from({ length: 6 }).map((_, i) => ({
       class: Npc,
       data: {
@@ -117,15 +118,11 @@ class GameLevelOcean {
           y: Math.random() * (height - 100)
         },
 
-        // ✅ THIS RUNS ON COLLISION
         reaction: function () {
-
-          // ✅ ADD SCORE
           if (gameEnv.gameScorer) {
             gameEnv.gameScorer.collectCoin(10);
           }
 
-          // ✅ FIND + REMOVE THIS FISH FROM GAME
           const fish = gameEnv.gameObjects.find(obj =>
             obj.spriteData && obj.spriteData.id === `Goldfish${i}`
           );
@@ -137,14 +134,78 @@ class GameLevelOcean {
       }
     }));
 
-    // 📦 Classes
+    // 🧠 AI NPC (EXACT SAME)
+    const sprite_src_historian = path + "/images/gamify/historyProf.png";
+    const sprite_greet_historian = "Hello! I'm an expert in history!";
+
+    const sprite_data_historian = {
+      id: "Professor History",
+      greeting: sprite_greet_historian,
+      src: sprite_src_historian,
+      SCALE_FACTOR: 5,
+      ANIMATION_RATE: 10,
+      pixels: { height: 263, width: 559 },
+      INIT_POSITION: { x: width * 0.5, y: height * 0.3 },
+      orientation: { rows: 4, columns: 9 },
+
+      down: { row: 3, start: 0, columns: 9 },
+      up: { row: 3, start: 0, columns: 9 },
+      left: { row: 3, start: 0, columns: 9 },
+      right: { row: 3, start: 0, columns: 9 },
+
+      hitbox: { widthPercentage: 0.2, heightPercentage: 0.3 },
+
+      expertise: "history",
+      chatHistory: [],
+
+      dialogues: [
+        "Ask me anything about history!",
+        "I have a depth of knowledge in history...",
+        "Do you want to learn about history?",
+        "Try out my chat session feature on history!",
+        "Are you curious about history? Talk to me!"
+      ],
+
+      knowledgeBase: {
+        history: [
+          {
+            question: "What is ancient Egypt?",
+            answer: "Ancient Egypt was one of the world's greatest civilizations, lasting over 3000 years!"
+          },
+          {
+            question: "Tell me about the Renaissance",
+            answer: "The Renaissance was a period of great cultural and artistic change."
+          },
+          {
+            question: "When was the Industrial Revolution?",
+            answer: "It took place from the late 1700s to the 1800s."
+          },
+          {
+            question: "Who was Napoleon?",
+            answer: "Napoleon was a French military leader who became Emperor."
+          }
+        ]
+      },
+
+      reaction: function () {
+        if (this.dialogueSystem) {
+          this.showReactionDialogue();
+        }
+      },
+
+      interact: function () {
+        AiNpc.showInteraction(this);
+      }
+    };
+
+    // 📦 LEVEL OBJECTS
     this.classes = [
       { class: GameEnvBackground, data: bgData },
       { class: Player, data: octopusData },
-      ...goldfishList
+      ...goldfishList,
+      { class: Npc, data: sprite_data_historian } // ✅ AI NPC ADDED
     ];
 
-    // ✅ total fish = 6
     gameEnv.gameScorer.setTotalCoins(6);
   }
 }

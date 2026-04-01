@@ -19,7 +19,7 @@ description: "Class of 2028"
 owner_name: Joshika Pochimireddy
 github_username: joshikap
 github_repo: "portfolio5" 
-baseurl: "" 
+baseurl: "/portfolio5" # the subpath of your site, e.g. /blog
 future: true
 
 # Build settings
