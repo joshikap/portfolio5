@@ -4,6 +4,7 @@ import GameEnvBackground from './essentials/GameEnvBackground.js';
 import Player from './essentials/Player.js';
 import Npc from './essentials/Npc.js';
 import Shark from './Shark.js';
+import Leaderboard from './essentials/Leaderboard.js';
 
 
 // Game Scoring System
