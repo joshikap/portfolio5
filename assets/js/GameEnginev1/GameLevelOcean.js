@@ -152,7 +152,7 @@ class GameLevelOcean {
 
 
    // 🧠 AI NPC (OCEAN EXPERT)
-   const sprite_src_ocean = path + "/images/gamify/oceanProf.png";
+   const sprite_src_ocean = path + "/images/gamify/historyProf.png";
 
 
    const sprite_data_ocean = {
