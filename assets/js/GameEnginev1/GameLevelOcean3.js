@@ -119,20 +119,20 @@ class GameLevelOcean {
     // Initialize scoring system
     gameEnv.gameScorer = new GameScorer(gameEnv);
 
-    // 🌊 Background
+    // Background
     const bgData = {
         name: 'ocean',
         src: path + "/images/gamify/water/space.png",
         pixels: { height: 1200, width: 857 }
     };
 
-    // 🐙 Player (FIXED)
+    // Player (FIXED)
     const sprite_data_octopus = {
         id: 'Octopus',
         src: path + "/images/gamify/water/octopus.png",
 
         SCALE_FACTOR: 5,
-        STEP_FACTOR: 400, // 🔥 CRITICAL FIX
+        STEP_FACTOR: 400, // CRITICAL FIX
         ANIMATION_RATE: 50,
 
         INIT_POSITION: { x: 100, y: height - (height/5) },
@@ -150,7 +150,7 @@ class GameLevelOcean {
         keypress: { up: 87, left: 65, down: 83, right: 68 }
     };
 
-    // 🐠 Goal
+    // Goal
     const sprite_data_goldfish = {
         id: 'Goldfish',
         greeting: "You escaped!",
@@ -169,7 +169,7 @@ class GameLevelOcean {
         hitbox: { widthPercentage: 0.3, heightPercentage: 0.4 }
     };
 
-    // 💰 Coins (collectibles for points)
+    // Coins (collectibles for points)
     const sprite_data_coin = {
         id: 'Coin',
         src: path + "/images/gamify/water/gold.png", // Using gold image for coin
@@ -191,7 +191,7 @@ class GameLevelOcean {
         { x: width * 0.7, y: height * 0.6 }
     ];
 
-    // 🦈 Shark
+    // Shark
     const sprite_data_shark = {
         id: 'Shark',
         src: path + "/images/gamify/water/shark.png",
@@ -209,7 +209,7 @@ class GameLevelOcean {
         hitbox: { widthPercentage: 0.3, heightPercentage: 0.5 }
     };
 
-    // 🧱 WALLS (REAL FIX APPLIED)
+    // WALLS (REAL FIX APPLIED)
     const wallStyle = {
         color: 'rgba(0,150,255,0.5)',
         visible: true,

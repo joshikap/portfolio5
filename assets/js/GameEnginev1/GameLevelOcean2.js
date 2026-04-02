@@ -87,7 +87,7 @@ class GameLevelOcean2 {
       gameEnv.gameScorer = new GameScorer(gameEnv);
 
 
-      // 🌊 Background
+      // Background
       const bgData = {
           id: "Water",
           src: path + "/images/gamify/water/space.png",
@@ -95,7 +95,7 @@ class GameLevelOcean2 {
       };
 
 
-      // 🦈 Shark
+      // Shark
       const sprite_data_shark = {
           id: 'Shark',
           greeting: "Enemy Shark",
@@ -179,7 +179,7 @@ class GameLevelOcean2 {
       }, 100);
 
 
-      // 🦈 Shark 2
+      // Shark 2
       const sprite_data_shark2 = {
           id: 'Shark2',
           greeting: "Enemy Shark",
@@ -263,7 +263,7 @@ class GameLevelOcean2 {
       }, 100);
 
 
-      // 🦈 Shark 3
+      // Shark 3
       const sprite_data_shark3 = {
           id: 'Shark3',
           greeting: "Enemy Shark",
@@ -395,7 +395,7 @@ class GameLevelOcean2 {
       ];
 
 
-      // 🐙 Player
+      // Player
       const sprite_data_octopus = {
           id: "Octopus",
           greeting: "Hi I am Octopus!",
@@ -422,7 +422,7 @@ class GameLevelOcean2 {
       };
 
 
-      // 📦 Classes
+      // Classes
       this.classes = [
           { class: GameEnvBackground, data: bgData },
           { class: Player, data: sprite_data_octopus },

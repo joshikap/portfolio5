@@ -7,9 +7,8 @@ import AiNpc from './essentials/AiNpc.js';
 
 
 
-// =======================
-// 🎯 SCORE SYSTEM
-// =======================
+// SCORE SYSTEM
+
 class GameScorer {
 constructor(gameEnv) {
   this.gameEnv = gameEnv;
@@ -75,9 +74,9 @@ setTotalCoins(count) {
 
 
 
-// =======================
-// 🌊 GAME LEVEL
-// =======================
+
+// GAME LEVEL
+
 class GameLevelOcean {
 
 
@@ -100,7 +99,7 @@ constructor(gameEnv) {
 
 
 
-  // 🌊 Background
+  // Background
   const bgData = {
     id: "Water",
     src: path + "/images/gamify/bg/reef.png",
@@ -110,7 +109,7 @@ constructor(gameEnv) {
 
 
 
-  // 🐙 Player
+  // Player
   const octopusData = {
     id: "Octopus",
     greeting: "Hi I am Octopus!",
@@ -131,7 +130,7 @@ constructor(gameEnv) {
 
 
 
-  // 🐠 Goldfish Template
+  // Goldfish Template
   const goldfishBase = {
     src: path + "/images/gamify/water/gold.png",
     SCALE_FACTOR: 6,
@@ -145,7 +144,7 @@ constructor(gameEnv) {
 
 
 
-  // 🐠 GOLD FISH
+  //  GOLD FISH
   const goldfishList = Array.from({ length: 6 }).map((_, i) => ({
     class: Npc,
     data: {
@@ -185,7 +184,7 @@ constructor(gameEnv) {
 
 
 
-  // 🧠 AI NPC (OCEAN EXPERT)
+  //  AI NPC (OCEAN EXPERT)
   const sprite_src_ocean = path + "/images/gamify/wizard.png";
 
 
@@ -279,7 +278,7 @@ constructor(gameEnv) {
 
 
 
-  // 📦 LEVEL OBJECTS
+  // LEVEL OBJECTS
   this.classes = [
     { class: GameEnvBackground, data: bgData },
     { class: Player, data: octopusData },
