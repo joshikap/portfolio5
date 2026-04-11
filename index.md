@@ -12,7 +12,52 @@ body {
     background-position: center;
     background-repeat: no-repeat;
 }
+
+/* FULL SCREEN LOCK */
+#gate {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    text-align: center;
+}
 </style>
+
+<!-- 🔒 GATE -->
+<div id="gate">
+    <h2>🔒 Unlock the Homepage</h2>
+    <p>Click 10 times to continue</p>
+
+    <button id="clickBtn" style="font-size:20px; padding:15px 30px; border-radius:10px;">
+        Click Me
+    </button>
+
+    <p>Progress: <span id="count">0</span> / 10</p>
+</div>
+
+<script>
+let count = 0;
+
+document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("clickBtn");
+
+    btn.onclick = () => {
+        count++;
+        document.getElementById("count").innerText = count;
+
+        if (count >= 10) {
+            document.getElementById("gate").style.display = "none";
+        }
+    };
+});
+</script>
+
+---
 
 Hi! our names are Isha and Joshika!
 
