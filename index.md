@@ -5,7 +5,16 @@ hide: true
 show_reading_time: false
 ---
 
-Hi! My name is [Your Full Name]
+<style>
+body {
+    background-image: url("/images/gamify/water/space.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+</style>
+
+Hi! our names are Isha and Joshika!
 
 ### Development Environment
 

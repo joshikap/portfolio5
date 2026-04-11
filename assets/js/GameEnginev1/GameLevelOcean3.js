@@ -213,7 +213,7 @@ class GameLevelOcean {
     const wallStyle = {
         color: 'rgba(0,150,255,0.5)',
         visible: true,
-        collidable: true, // 🔥 IMPORTANT
+        collidable: true, //  IMPORTANT
         hitbox: { widthPercentage: 1.0, heightPercentage: 1.0 }
     };
 
