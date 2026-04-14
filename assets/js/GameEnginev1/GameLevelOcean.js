@@ -50,6 +50,14 @@ class GameScorer {
     this.updateDisplay();
   }
 
+  deductPoints(points = 10) {
+    this.score -= points;
+    if (this.score < 0) {
+      this.score = 0;
+    }
+    this.updateDisplay();
+  }
+
   setTotalCoins(count) {
     this.totalCoins = count;
     this.updateDisplay();
@@ -202,6 +210,17 @@ class GameLevelOcean {
       hitbox: { widthPercentage: 0.4, heightPercentage: 0.4 },
       zIndex: 10,
       isKilling: false,
+      hasReacted: false,
+
+      reaction: function () {
+        if (!this.hasReacted && gameEnv.gameScorer) {
+          gameEnv.gameScorer.deductPoints(10);
+          this.hasReacted = true;
+          setTimeout(() => {
+            this.hasReacted = false;
+          }, 500);
+        }
+      },
 
       update: function () {
         if (this.isKilling) return;
