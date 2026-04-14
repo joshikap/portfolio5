@@ -187,7 +187,7 @@ class GameLevelOcean {
     };
 
     // ENEMY
-    const sprite_src_enemy = path + "/images/gamify/water/elonMusk.png";
+    const sprite_src_enemy = path + "/images/gamify/elonMusk.png";
 
     const sprite_data_enemy = {
       id: "EnemyElon",
