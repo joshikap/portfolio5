@@ -212,6 +212,30 @@ class GameLevelOcean {
       isKilling: false,
       hasReacted: false,
 
+      expertise: "chaos",
+      chatHistory: [],
+
+      dialogues: [
+        "I'm taking over the world! 🌍",
+        "Your tweets are no match for me!",
+        "The future is mine!",
+        "I'll catch you eventually!",
+        "You can't escape me!"
+      ],
+
+      knowledgeBase: {
+        chaos: [
+          {
+            question: "Who are you?",
+            answer: "I am the villain of this realm! Beware my wrath!"
+          },
+          {
+            question: "What do you want?",
+            answer: "I want to chase you across all the oceans!"
+          }
+        ]
+      },
+
       reaction: function () {
         if (!this.hasReacted && gameEnv.gameScorer) {
           gameEnv.gameScorer.deductPoints(10);
@@ -220,6 +244,10 @@ class GameLevelOcean {
             this.hasReacted = false;
           }, 500);
         }
+      },
+
+      interact: function () {
+        AiNpc.showInteraction(this);
       },
 
       update: function () {
@@ -268,13 +296,37 @@ class GameLevelOcean {
       }
     };
 
+    // ENEMY 2
+    const sprite_data_enemy2 = {
+      ...sprite_data_enemy,
+      id: "EnemyElon2",
+      INIT_POSITION: { x: width * 0.8, y: height * 0.5 }
+    };
+
+    // ENEMY 3
+    const sprite_data_enemy3 = {
+      ...sprite_data_enemy,
+      id: "EnemyElon3",
+      INIT_POSITION: { x: width * 0.5, y: height * 0.1 }
+    };
+
+    // ENEMY 4
+    const sprite_data_enemy4 = {
+      ...sprite_data_enemy,
+      id: "EnemyElon4",
+      INIT_POSITION: { x: width * 0.3, y: height * 0.7 }
+    };
+
     // LEVEL OBJECTS
     this.classes = [
       { class: GameEnvBackground, data: bgData },
       { class: Player, data: octopusData },
       ...goldfishList,
       { class: Npc, data: sprite_data_ocean },
-      { class: Npc, data: sprite_data_enemy } // 👈 Enemy added
+      { class: Npc, data: sprite_data_enemy },
+      { class: Npc, data: sprite_data_enemy2 },
+      { class: Npc, data: sprite_data_enemy3 },
+      { class: Npc, data: sprite_data_enemy4 }
     ];
 
     gameEnv.gameScorer.setTotalCoins(6);
