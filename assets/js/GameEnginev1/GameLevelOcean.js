@@ -3,6 +3,7 @@ import Player from './essentials/Player.js';
 import Npc from './essentials/Npc.js';
 import DialogueSystem from './essentials/DialogueSystem.js';
 import AiNpc from './essentials/AiNpc.js';
+import Shark from './Shark.js';
 
 
 // SCORE SYSTEM
@@ -317,6 +318,65 @@ class GameLevelOcean {
       INIT_POSITION: { x: width * 0.3, y: height * 0.7 }
     };
 
+    // SHARK
+    const sprite_data_shark = {
+      id: 'Shark',
+      greeting: "Enemy Shark",
+      src: path + "/images/gamify/water/shark.png",
+      SCALE_FACTOR: 3,
+      ANIMATION_RATE: 100,
+      pixels: { height: 225, width: 225 },
+      INIT_POSITION: {
+        x: Math.random() * width,
+        y: Math.random() * height
+      },
+      orientation: { rows: 1, columns: 1 },
+      down: { row: 0, start: 0, columns: 1 },
+      hitbox: { widthPercentage: 0.25, heightPercentage: 0.55 },
+      speed: 3,
+      direction: {
+        x: Math.random() > 0.5 ? 1 : -1,
+        y: Math.random() > 0.5 ? 1 : -1
+      },
+      gameEnv: gameEnv,
+      updatePosition: function () {
+        const octopusElement = document.getElementById('Octopus');
+        if (octopusElement) {
+          const octopusX = parseFloat(octopusElement.style.left);
+          const octopusY = parseFloat(octopusElement.style.top);
+          const dx = octopusX - this.INIT_POSITION.x;
+          const dy = octopusY - this.INIT_POSITION.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance > 0) {
+            this.direction.x = dx / distance;
+            this.direction.y = dy / distance;
+          }
+        }
+        this.INIT_POSITION.x += this.direction.x * this.speed;
+        this.INIT_POSITION.y += this.direction.y * this.speed;
+        if (this.INIT_POSITION.x <= 0 || this.INIT_POSITION.x >= width) {
+          this.direction.x *= -1;
+        }
+        if (this.INIT_POSITION.y <= 0 || this.INIT_POSITION.y >= height) {
+          this.direction.y *= -1;
+        }
+        const spriteElement = document.getElementById(this.id);
+        if (spriteElement) {
+          spriteElement.style.transform = this.direction.x < 0 ? "scaleX(-1)" : "scaleX(1)";
+          spriteElement.style.left = this.INIT_POSITION.x + 'px';
+          spriteElement.style.top = this.INIT_POSITION.y + 'px';
+        }
+      },
+      randomizeDirection: function () {
+        this.direction.x = Math.random() > 0.5 ? 1 : -1;
+        this.direction.y = Math.random() > 0.5 ? 1 : -1;
+      }
+    };
+
+    setInterval(() => {
+      sprite_data_shark.updatePosition();
+    }, 100);
+
     // LEVEL OBJECTS
     this.classes = [
       { class: GameEnvBackground, data: bgData },
@@ -326,7 +386,8 @@ class GameLevelOcean {
       { class: Npc, data: sprite_data_enemy },
       { class: Npc, data: sprite_data_enemy2 },
       { class: Npc, data: sprite_data_enemy3 },
-      { class: Npc, data: sprite_data_enemy4 }
+      { class: Npc, data: sprite_data_enemy4 },
+      { class: Shark, data: sprite_data_shark }
     ];
 
     gameEnv.gameScorer.setTotalCoins(10);
