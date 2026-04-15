@@ -294,7 +294,7 @@ class GameLevelOcean {
       { class: Npc, data: sprite_data_enemy } // 👈 Enemy added
     ];
 
-    gameEnv.gameScorer.setTotalCoins(6);
+    gameEnv.gameScorer.setTotalCoins(10);
   }
 }
 
