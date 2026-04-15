@@ -49,21 +49,11 @@ class GameScorer {
  }
 
 
- collectCoin(points = 10) {
-   this.coinsCollected++;
-   this.score += points;
-   this.updateDisplay();
- }
-
-
- deductPoints(points = 10) {
-   this.score -= points;
-   if (this.score < 0) {
-     this.score = 0;
-   }
-   this.updateDisplay();
- }
-
+  collectCoin(points = 10) {
+    this.coinsCollected++;
+    this.score += points;
+    this.updateDisplay();
+  }
 
  setTotalCoins(count) {
    this.totalCoins = count;
@@ -126,18 +116,17 @@ class GameLevelOcean {
    };
 
 
-   // GOLD FISH
-   const goldfishList = Array.from({ length: 10 }).map((_, i) => ({
-     class: Npc,
-     data: {
-       ...goldfishBase,
-       id: `Goldfish${i}`,
-       greeting: "+10 Points!",
-       INIT_POSITION: {
-         x: Math.random() * (width - 100),
-         y: Math.random() * (height - 100)
-       },
-
+    // GOLD FISH
+    const goldfishList = Array.from({ length: 6 }).map((_, i) => ({
+      class: Npc,
+      data: {
+        ...goldfishBase,
+        id: `Goldfish${i}`,
+        greeting: "+10 Points!",
+        INIT_POSITION: {
+          x: Math.random() * (width - 100),
+          y: Math.random() * (height - 100)
+        },
 
        reaction: function () {
          if (gameEnv.gameScorer) {
@@ -226,64 +215,19 @@ class GameLevelOcean {
    const sprite_src_enemy = path + "/images/gamify/elonMusk.png";
 
 
-   const sprite_data_enemy = {
-     id: "EnemyElon",
-     greeting: "You feel a dark presence…",
-     src: sprite_src_enemy,
-     SCALE_FACTOR: 5,
-     ANIMATION_RATE: 0,
-     pixels: { height: 256, width: 256 },
-     INIT_POSITION: { x: width * 0.2, y: height * 0.2 },
-     orientation: { rows: 1, columns: 1 },
-     down: { row: 0, start: 0, columns: 1 },
-     hitbox: { widthPercentage: 0.4, heightPercentage: 0.4 },
-     zIndex: 10,
-     isKilling: false,
-     hasReacted: false,
-
-
-     expertise: "chaos",
-     chatHistory: [],
-
-
-     dialogues: [
-       "I'm taking over the world! 🌍",
-       "Your tweets are no match for me!",
-       "The future is mine!",
-       "I'll catch you eventually!",
-       "You can't escape me!"
-     ],
-
-
-     knowledgeBase: {
-       chaos: [
-         {
-           question: "Who are you?",
-           answer: "I am the villain of this realm! Beware my wrath!"
-         },
-         {
-           question: "What do you want?",
-           answer: "I want to chase you across all the oceans!"
-         }
-       ]
-     },
-
-
-     reaction: function () {
-       if (!this.hasReacted && gameEnv.gameScorer) {
-         gameEnv.gameScorer.deductPoints(10);
-         this.hasReacted = true;
-         setTimeout(() => {
-           this.hasReacted = false;
-         }, 500);
-       }
-     },
-
-
-     interact: function () {
-       AiNpc.showInteraction(this);
-     },
-
+    const sprite_data_enemy = {
+      id: "EnemyElon",
+      greeting: "You feel a dark presence…",
+      src: sprite_src_enemy,
+      SCALE_FACTOR: 5,
+      ANIMATION_RATE: 0,
+      pixels: { height: 256, width: 256 },
+      INIT_POSITION: { x: width * 0.2, y: height * 0.2 },
+      orientation: { rows: 1, columns: 1 },
+      down: { row: 0, start: 0, columns: 1 },
+      hitbox: { widthPercentage: 0.4, heightPercentage: 0.4 },
+      zIndex: 10,
+      isKilling: false,
 
      update: function () {
        if (this.isKilling) return;
@@ -331,56 +275,27 @@ class GameLevelOcean {
          const self = this.gameEnv;
 
 
-         setTimeout(() => {
-           if (self && self.timerInterval) {
-             clearInterval(self.timerInterval);
-           }
-           location.reload();
-         }, 2000);
-       }
-     }
-   };
+          setTimeout(() => {
+            if (self && self.timerInterval) {
+              clearInterval(self.timerInterval);
+            }
+            location.reload();
+          }, 2000);
+        }
+      }
+    };
 
+    // LEVEL OBJECTS
+    this.classes = [
+      { class: GameEnvBackground, data: bgData },
+      { class: Player, data: octopusData },
+      ...goldfishList,
+      { class: Npc, data: sprite_data_ocean },
+      { class: Npc, data: sprite_data_enemy } // 👈 Enemy added
+    ];
 
-   // ENEMY 2
-   const sprite_data_enemy2 = {
-     ...sprite_data_enemy,
-     id: "EnemyElon2",
-     INIT_POSITION: { x: width * 0.8, y: height * 0.5 }
-   };
-
-
-   // ENEMY 3
-   const sprite_data_enemy3 = {
-     ...sprite_data_enemy,
-     id: "EnemyElon3",
-     INIT_POSITION: { x: width * 0.5, y: height * 0.1 }
-   };
-
-
-   // ENEMY 4
-   const sprite_data_enemy4 = {
-     ...sprite_data_enemy,
-     id: "EnemyElon4",
-     INIT_POSITION: { x: width * 0.3, y: height * 0.7 }
-   };
-
-
-   // LEVEL OBJECTS
-   this.classes = [
-     { class: GameEnvBackground, data: bgData },
-     { class: Player, data: octopusData },
-     ...goldfishList,
-     { class: Npc, data: sprite_data_ocean },
-     { class: Npc, data: sprite_data_enemy },
-     { class: Npc, data: sprite_data_enemy2 },
-     { class: Npc, data: sprite_data_enemy3 },
-     { class: Npc, data: sprite_data_enemy4 }
-   ];
-
-
-   gameEnv.gameScorer.setTotalCoins(10);
- }
+    gameEnv.gameScorer.setTotalCoins(6);
+  }
 }
 
 
