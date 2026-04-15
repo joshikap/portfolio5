@@ -379,7 +379,7 @@ class GameLevelOcean {
    ];
 
 
-   gameEnv.gameScorer.setTotalCoins(6);
+   gameEnv.gameScorer.setTotalCoins(10);
  }
 }
 
