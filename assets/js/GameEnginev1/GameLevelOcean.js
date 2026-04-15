@@ -112,7 +112,7 @@ class GameLevelOcean {
     };
 
     // GOLD FISH
-    const goldfishList = Array.from({ length: 6 }).map((_, i) => ({
+    const goldfishList = Array.from({ length: 10 }).map((_, i) => ({
       class: Npc,
       data: {
         ...goldfishBase,
