@@ -9,7 +9,7 @@ permalink: /enemies/lesson
 ## Ocean Enemy Game
 
 {% capture challenge %}
-Control the octopus and avoid the shark! Collect goldfish to score points.
+Control the octopus and collect goldfish to score points. Stay away from the ElonEnemies!
 {% endcapture %}
 
 {% capture code %}
