@@ -2,7 +2,30 @@
 layout: post
 codemirror: true
 title: Implementing Enemies 
-description: This is a lesson dedicated to demonstrating how different enemies can work in different types of games. Enemies can be used in multiple ways and this lesson shows how that occurs without errors. 
+description: Enemy demo with scoring and AI chasing behavior
 permalink: /enemies/lesson
-
 ---
+
+## Ocean Enemy Game
+
+{% capture challenge %}
+Control the octopus and avoid the shark! Collect goldfish to score points.
+{% endcapture %}
+
+{% capture code %}
+import GameControl from '/assets/js/GameEnginev1/essentials/GameControl.js';
+import GameLevelOcean from '/assets/js/GameEnginev1/GameLevelOcean.js';
+
+export const gameLevelClasses = [GameLevelOcean];
+{% endcapture %}
+
+{% include game-runner.html
+  runner_id="ocean-enemy-game"
+  challenge=challenge
+  code=code
+%}
+
+
+
+
+
