@@ -71,6 +71,9 @@ class GameLevelOcean {
 
     gameEnv.gameScorer = new GameScorer(gameEnv);
 
+    // 💥 GLOBAL COLLISION LOCK
+    gameEnv.elonHitCooldown = false;
+
     // BACKGROUND
     const bgData = {
       id: "Water",
@@ -78,7 +81,7 @@ class GameLevelOcean {
       pixels: { height: 597, width: 340 }
     };
 
-    // PLAYER
+    // PLAYER (OCTOPUS) — NOW HANDLES COLLISION
     const octopusData = {
       id: "Octopus",
       greeting: "Hi I am Octopus!",
@@ -93,7 +96,36 @@ class GameLevelOcean {
       right: { row: 1, start: 0, columns: 2 },
       down: { row: 0, start: 0, columns: 2 },
       idle: { row: 0, start: 0, columns: 1 },
-      hitbox: { widthPercentage: 0.4, heightPercentage: 0.4 }
+      hitbox: { widthPercentage: 0.4, heightPercentage: 0.4 },
+
+      // 💥 COLLISION FIX (THIS IS THE IMPORTANT PART)
+      update: function () {
+        if (!this.gameEnv?.gameObjects) return;
+
+        const enemies = this.gameEnv.gameObjects.filter(
+          obj => obj.spriteData?.id?.includes("EnemyElon")
+        );
+
+        for (const enemy of enemies) {
+          const dx = enemy.position.x - this.position.x;
+          const dy = enemy.position.y - this.position.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+
+          if (dist < 40) {
+            if (!this.gameEnv.elonHitCooldown) {
+              this.gameEnv.elonHitCooldown = true;
+
+              if (this.gameEnv.gameScorer) {
+                this.gameEnv.gameScorer.deductPoints(10);
+              }
+
+              setTimeout(() => {
+                this.gameEnv.elonHitCooldown = false;
+              }, 1000);
+            }
+          }
+        }
+      }
     };
 
     // GOLD FISH
@@ -122,7 +154,7 @@ class GameLevelOcean {
             gameEnv.gameScorer.collectCoin(10);
           }
           const fish = gameEnv.gameObjects.find(obj =>
-            obj.spriteData && obj.spriteData.id === `Goldfish${i}`
+            obj.spriteData?.id === `Goldfish${i}`
           );
           if (fish) fish.destroy();
         }
@@ -140,25 +172,10 @@ class GameLevelOcean {
       pixels: { height: 300, width: 300 },
       INIT_POSITION: { x: width * 0.5, y: height * 0.3 },
       orientation: { rows: 1, columns: 1 },
-      hitbox: { widthPercentage: 0.2, heightPercentage: 0.3 },
-      dialogueHistory: [],
-      dialogues: [
-        "Ask me anything about the ocean!",
-        "The ocean is full of mysteries 🌊",
-        "Sharks are powerful predators!",
-        "Be careful in deep water..."
-      ],
-      reaction: function () {
-        if (this.dialogueSystem) {
-          this.showReactionDialogue();
-        }
-      },
-      interact: function () {
-        AiNpc.showInteraction(this);
-      }
+      hitbox: { widthPercentage: 0.2, heightPercentage: 0.3 }
     };
 
-    // ENEMIES (ELON STYLE)
+    // ENEMIES (NO MORE SCORING INSIDE THEM)
     const sprite_src_enemy = path + "/images/gamify/elonMusk.png";
 
     const baseEnemy = {
@@ -167,7 +184,6 @@ class GameLevelOcean {
       ANIMATION_RATE: 0,
       pixels: { height: 256, width: 256 },
       orientation: { rows: 1, columns: 1 },
-      down: { row: 0, start: 0, columns: 1 },
       hitbox: { widthPercentage: 0.4, heightPercentage: 0.4 },
       zIndex: 10,
       isKilling: false,
@@ -188,6 +204,7 @@ class GameLevelOcean {
           const dx = player.position.x - this.position.x;
           const dy = player.position.y - this.position.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
+
           if (dist < minDist) {
             minDist = dist;
             nearest = player;
@@ -201,60 +218,26 @@ class GameLevelOcean {
 
         this.position.x += Math.cos(angle) * speed;
         this.position.y += Math.sin(angle) * speed;
-
-        if (minDist < 40) {
-          this.isKilling = true;
-          const self = this.gameEnv;
-
-          setTimeout(() => {
-            if (self?.timerInterval) clearInterval(self.timerInterval);
-            location.reload();
-          }, 2000);
-        }
       }
     };
 
-    const sprite_data_enemy = {
-      ...baseEnemy,
-      id: "EnemyElon",
-      INIT_POSITION: { x: width * 0.2, y: height * 0.2 }
-    };
+    const sprite_data_enemy = { ...baseEnemy, id: "EnemyElon", INIT_POSITION: { x: width * 0.2, y: height * 0.2 } };
+    const sprite_data_enemy2 = { ...baseEnemy, id: "EnemyElon2", INIT_POSITION: { x: width * 0.8, y: height * 0.5 } };
+    const sprite_data_enemy3 = { ...baseEnemy, id: "EnemyElon3", INIT_POSITION: { x: width * 0.5, y: height * 0.1 } };
+    const sprite_data_enemy4 = { ...baseEnemy, id: "EnemyElon4", INIT_POSITION: { x: width * 0.3, y: height * 0.7 } };
 
-    const sprite_data_enemy2 = {
-      ...baseEnemy,
-      id: "EnemyElon2",
-      INIT_POSITION: { x: width * 0.8, y: height * 0.5 }
-    };
-
-    const sprite_data_enemy3 = {
-      ...baseEnemy,
-      id: "EnemyElon3",
-      INIT_POSITION: { x: width * 0.5, y: height * 0.1 }
-    };
-
-    const sprite_data_enemy4 = {
-      ...baseEnemy,
-      id: "EnemyElon4",
-      INIT_POSITION: { x: width * 0.3, y: height * 0.7 }
-    };
-
-    // 🦈 SHARK ENEMY (NEW)
+    // SHARK
     const sprite_src_shark = path + "/images/gamify/water/shark.png";
 
     const sprite_data_shark = {
       id: "SharkEnemy",
-      greeting: "A shark emerges...",
       src: sprite_src_shark,
       SCALE_FACTOR: 6,
       ANIMATION_RATE: 0,
       pixels: { height: 256, width: 256 },
       INIT_POSITION: { x: width * 0.6, y: height * 0.9 },
       orientation: { rows: 1, columns: 1 },
-      down: { row: 0, start: 0, columns: 1 },
       hitbox: { widthPercentage: 0.4, heightPercentage: 0.4 },
-      zIndex: 10,
-      isKilling: false,
-
       update: function () {
         if (this.isKilling) return;
 
@@ -285,20 +268,9 @@ class GameLevelOcean {
 
         this.position.x += Math.cos(angle) * speed;
         this.position.y += Math.sin(angle) * speed;
-
-        if (minDist < 45) {
-          this.isKilling = true;
-          const self = this.gameEnv;
-
-          setTimeout(() => {
-            if (self?.timerInterval) clearInterval(self.timerInterval);
-            location.reload();
-          }, 1500);
-        }
       }
     };
 
-    // LEVEL OBJECTS
     this.classes = [
       { class: GameEnvBackground, data: bgData },
       { class: Player, data: octopusData },
@@ -310,7 +282,6 @@ class GameLevelOcean {
       { class: Npc, data: sprite_data_enemy3 },
       { class: Npc, data: sprite_data_enemy4 },
 
-      // 🦈 SHARK ADDED
       { class: Shark, data: sprite_data_shark }
     ];
 
@@ -319,7 +290,6 @@ class GameLevelOcean {
 }
 
 export default GameLevelOcean;
-
 
 
 
